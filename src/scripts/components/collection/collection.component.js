@@ -16,40 +16,51 @@ import CardIcons from '../card-icons/card-icons.component';
 // Context
 import { ProductsInfoContext } from '../../../App';
 
+// Modules
+import CONSTANTS from '../../modules/constants';
+
 const Collection = (props) => {
-  const url = `https://meraki-products.herokuapp.com/meraki-products`;
-  const collectionIteration = 4;
+  // Number of products to view
+  const CollectionIteration = 4;
+  const CollectionLimit = 12;
+
   const [product, setProduct] = useState({ loading: true, data: null });
-  const [productSize, setProductSize] = useState(collectionIteration);
+  const [productSize, setProductSize] = useState(CollectionIteration);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
-  var itemsLimit = 12;
 
   useEffect(() => {
-    async function getProducts() {
-      const response = await Axios(url);
+    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.products);
+
+    if (!IsProductStorageKeySet) {
+      (async function () {
+        const response = await Axios(CONSTANTS.api.host + CONSTANTS.api.requests.getAll);
+
+        setProduct({
+          loading: false,
+          data: response.data.products
+        });
+
+        localStorage.setItem(CONSTANTS.storageKeys.products, JSON.stringify(response));
+      })();
+    } else {
+      const storageData = JSON.parse(IsProductStorageKeySet);
 
       setProduct({
         loading: false,
-        data: response.data.products
+        data: storageData.data.products
       });
-
-      if (response.data) {
-        localStorage.setItem('products', JSON.stringify(response.data));
-      }
     }
-
-    getProducts();
   }, []);
 
   const loadMoreItems = () => {
-    if (productSize < itemsLimit) {
-      setProductSize(productSize + collectionIteration);
+    if (productSize < CollectionLimit) {
+      setProductSize(productSize + CollectionIteration);
     }
-  };
+  }
 
   const titleUpdate = (title) => {
     return title.split('-').join(' ');
-  };
+  }
 
   const redirectToCatalogue = () => {
     return (
@@ -59,7 +70,7 @@ const Collection = (props) => {
         </Button>
       </Link>
     );
-  };
+  }
 
   const seeMoreItems = () => {
     return (
@@ -67,7 +78,7 @@ const Collection = (props) => {
         See More
       </Button>
     );
-  };
+  }
 
   if (product.loading) {
     return (
@@ -75,9 +86,7 @@ const Collection = (props) => {
         <ProgressComponent />
       </div>
     );
-  }
-
-  if (product.data) {
+  } else {
     var productsSlice = product.data.slice(0, productSize);
 
     return (
@@ -112,7 +121,7 @@ const Collection = (props) => {
 
         <Row>
           <Col className="text-center">
-            {productSize < itemsLimit ? seeMoreItems() : redirectToCatalogue()}
+            {productSize < CollectionLimit ? seeMoreItems() : redirectToCatalogue()}
           </Col>
         </Row>
       </React.Fragment>
