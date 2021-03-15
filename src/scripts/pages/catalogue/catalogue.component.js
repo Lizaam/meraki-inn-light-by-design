@@ -16,41 +16,35 @@ import CardIcons from '../../components/card-icons/card-icons.component';
 // Context
 import { ProductsInfoContext } from '../../../App';
 
+// Modules
+import CONSTANTS from '../../modules/constants';
+
 const CatalogueComponent = (data) => {
-  const url = `https://meraki-products.herokuapp.com/meraki-products`;
-  const collectionIteration = 12;
+  // Number of products to view
+  const CollectionIteration = 12;
+  var maximumProductsLengthReached = false;
+
   const [product, setProduct] = useState({ loading: true, data: null });
-  const [productSize, setProductSize] = useState(collectionIteration);
+  const [productSize, setProductSize] = useState(CollectionIteration);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
   const products = (data.location.data) ? data.location.data.products : 'all';
 
   const firstLetterCapitalize = (string) => {
-    if (typeof string !== 'string') {
-      return ''
-    } else {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   useEffect(() => {
-    async function getProducts() {
-      const response = await Axios(url);
+    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.products);
+    const storageData = JSON.parse(IsProductStorageKeySet);
 
-      setProduct({
-        loading: false,
-        data: response.data.products
-      });
-
-      if (response.data) {
-        localStorage.setItem('products', JSON.stringify(response.data));
-      }
-    }
-
-    getProducts();
+    setProduct({
+      loading: false,
+      data: storageData.data.products
+    });
   }, []);
 
   const loadMoreItems = () => {
-    setProductSize(productSize + collectionIteration);
+    setProductSize(productSize + CollectionIteration);
   }
 
   const titleUpdate = (title) => {
@@ -58,11 +52,19 @@ const CatalogueComponent = (data) => {
   }
 
   const seeMoreItems = () => {
-    return (
-      <Button type="button" variant="warning" className="text-light font-weight-bold" onClick={loadMoreItems}>
-        See More
-      </Button>
-    );
+    maximumProductsLengthReached = (productSize > product.data.length - 1);
+
+    if (maximumProductsLengthReached) {
+      return (
+        <React.Fragment></React.Fragment>
+      );
+    } else {
+      return (
+        <Button type="button" variant="warning" className="text-light font-weight-bold" onClick={loadMoreItems}>
+          See More
+        </Button>
+      );
+    }
   };
 
   if (product.loading) {
@@ -71,113 +73,111 @@ const CatalogueComponent = (data) => {
         <ProgressComponent />
       </div>
     );
-  }
-
-  if (product.data) {
+  } else {
     var productsSlice = product.data.slice(0, productSize);
+
+    return (
+      <React.Fragment>
+        <PageIndication page="Catalogue" />
+  
+        <Container className="py-4">
+          <Row>
+            <Col md={3}>
+              <div id="light-left-s-1">
+                <div className="light-left-search-links">Home / Catalogue {` / ` + firstLetterCapitalize(products)}</div>
+                <h5>Shop By</h5>
+              </div>
+  
+              <hr />
+  
+              <div id="light-left-s-2">
+                <Accordion>
+                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="0">
+                    <p className="s2-sort-header">
+                      Categories
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body className="p-0">
+                      <Form>
+                        <Form.Group id="s-2-checkboxes">
+                          <Form.Check type="checkbox" label="Chandeliers" className="checkbox-text" />
+                          <Form.Check type="checkbox" label="Lamps" className="checkbox-text" />
+                        </Form.Group>
+                      </Form>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="1">
+                    <p className="s2-sort-header">
+                      Price
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="1">
+                    <Card.Body className="p-0">
+                      <Form>
+                        <Form.Group controlId="formBasicRange">
+                          <Form.Label>Range</Form.Label>
+                          <Form.Control type="range" />
+                        </Form.Group>
+                      </Form>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="2">
+                    <p className="s2-sort-header">
+                      Type
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="2">
+                    <Card.Body className="p-0">
+                      <Form>
+                        <Form.Group controlId="formBasicRange">
+                          <Form.Check type="checkbox" label="Beaded" className="checkbox-text" />
+                          <Form.Check type="checkbox" label="Crystals" className="checkbox-text" />
+                          <Form.Check type="checkbox" label="Retro" className="checkbox-text" />
+                        </Form.Group>
+                      </Form>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Accordion>
+              </div>
+            </Col>
+            <Col md={9}>
+              <Row>
+                {
+                  productsSlice.map((value, key) => {
+                    return (
+                      <Col md={4} sm={4} xs={12} className="mb-4" key={key}>
+                        <Link
+                          to={'/product-info'}
+                          className="text-dark"
+                        >
+                          <Card onClick={() => productInfoState(value)}>
+                            <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
+  
+                            <Card.Body className="small-text">
+                              <h6>{titleUpdate(value.name)}</h6>
+                              <Card.Text className="mb-0">Style: {value.info.style}</Card.Text>
+                              <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
+                              <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
+                              <CardIcons product={value} showAdditionalText={false} />
+                            </Card.Body>
+                          </Card>
+                        </Link>
+                      </Col>
+                    );
+                  })
+                }
+  
+                <Col md={12} className="text-center">
+                  {seeMoreItems()}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </React.Fragment>
+    );
   }
-
-  return (
-    <React.Fragment>
-      <PageIndication page="Catalogue" />
-
-      <Container className="py-4">
-        <Row>
-          <Col md={3}>
-            <div id="light-left-s-1">
-              <div className="light-left-search-links">Home / Catalogue {` / ` + firstLetterCapitalize(products)}</div>
-              <h5>Shop By</h5>
-            </div>
-
-            <hr />
-
-            <div id="light-left-s-2">
-              <Accordion>
-                <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="0">
-                  <p className="s2-sort-header">
-                    Categories
-                  </p>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body className="p-0">
-                    <Form>
-                      <Form.Group id="s-2-checkboxes">
-                        <Form.Check type="checkbox" label="Chandeliers" className="checkbox-text" />
-                        <Form.Check type="checkbox" label="Lamps" className="checkbox-text" />
-                      </Form.Group>
-                    </Form>
-                  </Card.Body>
-                </Accordion.Collapse>
-                <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="1">
-                  <p className="s2-sort-header">
-                    Price
-                  </p>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="1">
-                  <Card.Body className="p-0">
-                    <Form>
-                      <Form.Group controlId="formBasicRange">
-                        <Form.Label>Range</Form.Label>
-                        <Form.Control type="range" />
-                      </Form.Group>
-                    </Form>
-                  </Card.Body>
-                </Accordion.Collapse>
-                <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="2">
-                  <p className="s2-sort-header">
-                    Type
-                  </p>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="2">
-                  <Card.Body className="p-0">
-                    <Form>
-                      <Form.Group controlId="formBasicRange">
-                        <Form.Check type="checkbox" label="Beaded" className="checkbox-text" />
-                        <Form.Check type="checkbox" label="Crystals" className="checkbox-text" />
-                        <Form.Check type="checkbox" label="Retro" className="checkbox-text" />
-                      </Form.Group>
-                    </Form>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Accordion>
-            </div>
-          </Col>
-          <Col md={9}>
-            <Row>
-              {
-                productsSlice.map((value, key) => {
-                  return (
-                    <Col md={4} sm={4} xs={12} className="mb-4" key={key}>
-                      <Link
-                        to={'/product-info'}
-                        className="text-dark"
-                      >
-                        <Card onClick={() => productInfoState(value)}>
-                          <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
-
-                          <Card.Body className="small-text">
-                            <h6>{titleUpdate(value.name)}</h6>
-                            <Card.Text className="mb-0">Style: {value.info.style}</Card.Text>
-                            <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
-                            <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
-                            <CardIcons product={value} showAdditionalText={false} />
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </Col>
-                  );
-                })
-              }
-
-              <Col md={12} className="text-center">
-                {seeMoreItems()}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </React.Fragment>
-  );
 };
 
 export default CatalogueComponent;
