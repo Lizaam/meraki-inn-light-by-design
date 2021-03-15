@@ -6,7 +6,7 @@ export default class CONSTANTS {
   static api = {
     host: 'https://meraki-products.herokuapp.com/',
     requests: {
-      getAll: 'meraki-products'
+      getAll: 'getAll'
     }
   }
 }
