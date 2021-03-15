@@ -1,0 +1,18 @@
+.support-icon {
+  font-size: 46pt;
+}
+
+.fa-check-circle {
+  font-size: 16pt;
+  line-height: 26px;
+  margin-right: 10px;
+}
+
+@media (max-width: 767px) {
+  .support-container {
+    text-align: center !important;
+  }
+  .support-icon {
+    font-size: 28pt;
+  }
+}

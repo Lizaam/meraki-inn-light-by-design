@@ -1,0 +1,41 @@
+/** All global styling goes here, please keep this stylesheet to a minimum **/
+@import '../styles/colors';
+
+a {
+  color: $base-color;
+
+  &:hover {
+    text-decoration: none;
+    color: $secondary-color !important;
+    transition: linear 0.05s;
+    -webkit-transition: linear 0.05s;
+    -moz-transition: linear 0.05s;
+  }
+}
+
+.c-w {
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+/** Bootstrap classes override **/
+#dropdown-basic {
+  letter-spacing: 1px;
+  box-shadow: none;
+}
+.form-control {
+  box-shadow: none !important;
+}
+
+/** Form controls **/
+.custom-form-control-input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+.custom-form-control-input:focus {
+  background: transparent !important;
+}

@@ -1,0 +1,30 @@
+@import '../../../styles/colors.scss';
+
+.about-figures {
+  background-color: $light-grey-color;
+}
+
+@media (max-width: 767px) {
+  .about-details-left {
+    h2, p {
+      text-align: center;
+    }
+  }
+
+  .about-list {
+    width: 265px;
+    margin: 0 auto 30px;
+  }
+
+  .about-figures {
+    margin-top: 20px;
+
+    div {
+      margin-bottom: 30px;
+
+      hr {
+        margin: 0 auto !important;
+      }
+    }
+  }
+}

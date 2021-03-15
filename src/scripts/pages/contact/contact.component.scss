@@ -1,0 +1,55 @@
+@import '../../../styles//colors.scss';
+
+.contact-form-left {
+  .form-row {
+    div {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.contact-list-group-line-height {
+  margin-bottom: 10px;
+  border-width: 1px !important;
+
+  small {
+    position: relative;
+    top: 5px;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 9pt;
+    color: $dark-color;
+
+    &:hover {
+      color: $secondary-color;
+      text-decoration: none;
+    }
+  }
+}
+
+.list-group-fa-icon {
+  float: left;
+  background-color: #f1f1f1;
+  color: #ffa500;
+  padding: 20px;
+  font-size: 15pt;
+  margin-right: 10px;
+  max-width: 53px;
+}
+
+@media (max-width: 992px) {
+  .list-group-fa-icon {
+    line-height: 45px;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-form-left {
+    margin-bottom: 15px;
+  }
+  .list-group-fa-icon {
+    line-height: 45px;
+  }
+}

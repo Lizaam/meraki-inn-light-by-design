@@ -1,0 +1,115 @@
+.h-fit-content {
+  height: fit-content;
+
+  .info-section {
+    div {
+      font-size: 10pt;
+    }
+  }
+}
+
+.product-header-details {
+  img {
+    margin-right: 5px;
+  }
+}
+
+.product-mail-details {
+  h3 {
+    &:first-child {
+      font-weight: 300;
+      margin-bottom: 15px;
+    }
+
+    &:nth-child(2) {
+      font-weight: 600;
+    }
+  }
+}
+
+.product-extra-details {
+  ul {
+    li {
+      margin-bottom: 10px;
+
+      span {
+        img {
+          float: left;
+        }
+
+        .catch-phrase {
+          margin-left: 45px;
+          line-height: 20px;
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.product-description {
+  display: block;
+  margin-top: 25px;
+
+  &[aria-hidden="true"]::after {
+    opacity: 0;
+  }
+
+  ul {
+    max-height: 100px;
+    overflow: hidden;
+
+    &.description-expanded {
+      max-height: 300px;
+    }
+  }
+
+  &:after {
+    content: "";
+    opacity: 1;
+    height: 30%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1),rgba(255, 255, 255, 1));
+    pointer-events: none;
+  }
+
+  button {
+    position: relative;
+    z-index: 250;
+  }
+}
+
+.additional-information-tab-list {
+  border-bottom: 1px solid #d2d2d2;
+
+  li {
+    display: inline-block;
+    margin-right: 20px;
+    height: 35px;
+    cursor: pointer;
+  }
+}
+
+li.tab-active {
+  border-bottom: 3px solid #343a40;
+}
+
+// React Simple Image Viewer Styling
+#ReactSimpleImageViewer {
+  z-index: 99999;
+  background-color: #000000f2;
+
+  div {
+    div {
+      img {
+        width: 50%;
+      }
+    }
+  }
+}

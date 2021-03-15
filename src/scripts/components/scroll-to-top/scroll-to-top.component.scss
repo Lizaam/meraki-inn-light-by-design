@@ -1,0 +1,23 @@
+.back-to-top {
+    color: #fff;
+    background-color: #ffc107;
+    padding: 7px 15px 10px;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    transition: opacity 0.2s;
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border: 0;
+
+    &.show-scroll-button {
+        transition: opacity 0.2s;
+        -webkit-transition: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

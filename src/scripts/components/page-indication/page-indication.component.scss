@@ -1,0 +1,19 @@
+@import '../../../styles/colors.scss';
+
+#c-3 {
+  background-color: $light-grey-color;
+
+  .p-i-header {
+    color: $secondary-color;
+  }
+}
+
+@media (max-width: 767px) {
+  .p-i-header {
+    font-size: 16pt;
+    margin-bottom: 0 !important;
+  }
+  .p-i-text {
+    display: none;
+  }
+}

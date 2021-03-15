@@ -1,0 +1,76 @@
+@import '../../../styles/colors';
+
+#c-footer {
+    background-color: $dark-color;
+    
+    a,
+    p:not(.logo-tagline) {
+        font-size: 9pt;
+        color: $grey-color;
+    }
+    .details {
+        color: $grey-color;
+        float: left;
+    }
+    .h5-footer-margin-bottom {
+        margin-bottom: 10px;
+    }    
+}
+
+@media (max-width: 1050px) {
+    .logo-heading {
+        font-size: 13pt;
+    }
+    .logo-tagline {
+        font-size: 7.5px;
+    }
+    .h5-footer-margin-bottom {
+        font-size: 11pt;
+    }
+    #c-footer {
+        .footer-col-1-info {
+            margin-bottom: 0 !important;
+        }
+        .details {
+            font-size: 9pt;
+            margin-right: 10px !important;
+        }
+        .social {
+            font-size: 9pt;
+            margin-right: 10px !important;
+        }
+        a,
+        p:not(.logo-tagline) {
+            font-size: 7pt;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    #c-footer {
+        .details {
+            font-size: 9pt;
+            margin-right: 5px !important;
+        }
+    }
+    .footer-col-1-details,
+    .footer-col-2-categories,
+    .footer-col-3-information,
+    .footer-col-4-quick-links {
+        margin-bottom: 25px;
+    }
+    #formNewsletter {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 575px) {
+    #c-footer {
+        text-align: center;
+
+        #formNewsletter {
+            margin: 0 auto;
+        }
+    }
+}
