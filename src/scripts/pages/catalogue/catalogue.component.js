@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 
 // Libraries
 import { Container, Row, Col, Button, Accordion, Card, Form } from 'react-bootstrap';
-import Axios from 'axios';
 import { Link } from 'react-router-dom';
 
 // Styles
@@ -48,7 +47,7 @@ const CatalogueComponent = (data) => {
   }
 
   const titleUpdate = (title) => {
-    return title.split("-").join(" ");
+    return title.split('-').join(' ');
   }
 
   const seeMoreItems = () => {
