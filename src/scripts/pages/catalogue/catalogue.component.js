@@ -33,7 +33,7 @@ const CatalogueComponent = (data) => {
   }
 
   useEffect(() => {
-    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.products);
+    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
     const storageData = JSON.parse(IsProductStorageKeySet);
 
     setProduct({

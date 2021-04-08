@@ -29,7 +29,7 @@ const Collection = (props) => {
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
-    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.products);
+    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
 
     if (!IsProductStorageKeySet) {
       (async function () {
@@ -40,7 +40,7 @@ const Collection = (props) => {
           data: response.data.products
         });
 
-        localStorage.setItem(CONSTANTS.storageKeys.products, JSON.stringify(response));
+        localStorage.setItem(CONSTANTS.storageKeys.all, JSON.stringify(response));
       })();
     } else {
       const storageData = JSON.parse(IsProductStorageKeySet);
@@ -101,7 +101,7 @@ const Collection = (props) => {
                     className="text-dark"
                     onClick={props.handleNavItem}
                   >
-                    <Card onClick={() => productInfoState(value)}>
+                    <Card>
                       <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
 
                       <Card.Body className="small-text">
@@ -110,6 +110,9 @@ const Collection = (props) => {
                         <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
                         <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
                         <CardIcons product={value} showAdditionalText={false} />
+                        <Button type="button" variant="warning" className="text-light font-weight-bold mt-4" onClick={() => productInfoState(value)}>
+                          View Info
+                        </Button>
                       </Card.Body>
                     </Card>
                   </Link>
