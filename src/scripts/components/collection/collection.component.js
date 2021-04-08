@@ -29,7 +29,7 @@ const Collection = (props) => {
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
-    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.products);
+    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
 
     if (!IsProductStorageKeySet) {
       (async function () {
@@ -40,7 +40,7 @@ const Collection = (props) => {
           data: response.data.products
         });
 
-        localStorage.setItem(CONSTANTS.storageKeys.products, JSON.stringify(response));
+        localStorage.setItem(CONSTANTS.storageKeys.all, JSON.stringify(response));
       })();
     } else {
       const storageData = JSON.parse(IsProductStorageKeySet);
