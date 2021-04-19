@@ -1,45 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
-
-// Styles
 import './collection.component.scss';
 import '../../../styles/_global.scss';
-
-// Libraries
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Card } from 'react-bootstrap';
-
-// Components
 import ProgressComponent from '../../components/progress/progress.component';
 import CardIcons from '../card-icons/card-icons.component';
-
-// Context
 import { ProductsInfoContext } from '../../../App';
-
-// Modules
 import CONSTANTS from '../../modules/constants';
-
-// Providers
 import { GetAllProducts } from '../../providers/products.provider';
 
 const Collection = (props) => {
-  // local variables
-  const CollectionIteration = 4;
-  const CollectionLimit = CollectionIteration * 2;
+  const collection_iteration = 4;
+  const collection_limit = collection_iteration * 2;
 
-  // state and context
   const [product, setProduct] = useState({ loading: true, data: null });
-  const [productSize, setProductSize] = useState(CollectionIteration);
+  const [productSize, setProductSize] = useState(collection_iteration);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
 
-  // info logging
-  if (productInfo.length > 0) {
-    console.log(productInfo);
-  }
-
   useEffect(() => {
-    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
+    const get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
 
-    if (!IsProductStorageKeySet) {
+    if (!get_products_from_storage) {
       GetAllProducts().then(data => {
         setProduct({
           loading: false,
@@ -49,26 +30,26 @@ const Collection = (props) => {
         localStorage.setItem(CONSTANTS.storageKeys.all, JSON.stringify(data));
       })
     } else {
-      const storageData = JSON.parse(IsProductStorageKeySet);
+      const storage_data = JSON.parse(get_products_from_storage);
 
       setProduct({
         loading: false,
-        data: storageData.products
+        data: storage_data.products
       });
     }
   }, []);
 
-  const loadMoreItems = () => {
-    if (productSize < CollectionLimit) {
-      setProductSize(productSize + CollectionIteration);
+  const LoadMoreProducts = () => {
+    if (productSize < collection_limit) {
+      setProductSize(productSize + collection_iteration);
     }
   }
 
-  const titleUpdate = (title) => {
+  const TitleUpdate = (title) => {
     return title.split('-').join(' ');
   }
 
-  const redirectToCatalogue = () => {
+  const RedirectToCatalogue = () => {
     return (
       <Link
         to={{
@@ -85,9 +66,9 @@ const Collection = (props) => {
     );
   }
 
-  const seeMoreItems = () => {
+  const ViewMoreProducts = () => {
     return (
-      <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2" onClick={loadMoreItems}>
+      <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2" onClick={LoadMoreProducts}>
         See More
       </Button>
     );
@@ -118,7 +99,7 @@ const Collection = (props) => {
                       <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
 
                       <Card.Body className="small-text">
-                        <h6>{titleUpdate(value.name)}</h6>
+                        <h6>{TitleUpdate(value.name)}</h6>
                         <Card.Text className="mb-0">Style: {value.info.style}</Card.Text>
                         <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
                         <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
@@ -137,7 +118,7 @@ const Collection = (props) => {
 
         <Row>
           <Col className="text-center">
-            {productSize < CollectionLimit ? seeMoreItems() : redirectToCatalogue()}
+            {productSize < collection_limit ? ViewMoreProducts() : RedirectToCatalogue()}
           </Col>
         </Row>
       </React.Fragment>

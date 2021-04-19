@@ -3,7 +3,7 @@ import { Container, Row, Col, Accordion, Card } from 'react-bootstrap';
 import './faqs.component.scss';
 import PageIndication from '../../components/page-indication/page-indication.component';
 
-const FrequentlyAskedQuestion = [
+const frequently_asked_questions = [
   {
     q: 'Is it necessary for me to register an account in order to buy an item?',
     a: 'Yes and this is made with your own convenience in mind. By creating (or using) an account during the purchasing process.'
@@ -36,7 +36,7 @@ const FaqsComponent = () => {
           <Col md={12}>
             <Accordion>
               {
-                FrequentlyAskedQuestion.map((obj, key) => {
+                frequently_asked_questions.map((obj, key) => {
                   return (
                     <Card className="border-0" eventKey={key} key={key}>
                       <Accordion.Toggle as={Card.Header} eventKey={key} className="border-0 bg-transparent cursor-pointer">

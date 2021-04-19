@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
-// Styles
 import './home-slider.component.scss';
 import '../../../styles/swiper.css';
-
-// Libraries
 import Swiper from 'react-id-swiper';
-
-// Assets
 import HomeSliderImage1 from '../../../assets/images/hotel.jpg';
 import HomeSliderImage2 from '../../../assets/images/kitchen.jpg';
 
 const HomeSliderComponent = () => {
-	let homeSliderIndex = 0;
-	let reachEndTimeout = undefined;
+	var home_slider_index = 0;
+	var reach_end_timeout = undefined;
 	const [captionTransition, captionTransitionState] = useState(null);
 
 	const params = {
@@ -32,30 +26,32 @@ const HomeSliderComponent = () => {
 		a11y: false,
 		on: {
 			slideNextTransitionEnd: function () {
-				const slidesLength = this.slidesGrid.length;
-				homeSliderIndex++;
+				const slides_length = this.slidesGrid.length;
+				home_slider_index++;
 
-				if (homeSliderIndex >= slidesLength)
-					homeSliderIndex = 0;
+				if (home_slider_index >= slides_length)
+					home_slider_index = 0;
 
-				captionTransitionState(homeSliderIndex);
+				captionTransitionState(home_slider_index);
 			},
+
 			slidePrevTransitionEnd: function () {
-				if (reachEndTimeout > 0) {
-					clearTimeout(reachEndTimeout);
+				if (reach_end_timeout > 0) {
+					clearTimeout(reach_end_timeout);
 				}
 
-				homeSliderIndex--;
+				home_slider_index--;
 
-				if (homeSliderIndex === -1)
-					homeSliderIndex = 0;
+				if (home_slider_index === -1)
+					home_slider_index = 0;
 
-				captionTransitionState(homeSliderIndex);
+				captionTransitionState(home_slider_index);
 			},
+			
 			reachEnd: function () {
 				const _this = this;
 
-				reachEndTimeout = setTimeout(function () {
+				reach_end_timeout = setTimeout(function () {
 					_this.slideTo(0)
 				}, 5000);
 			}
@@ -63,8 +59,8 @@ const HomeSliderComponent = () => {
 	}
 
 	useEffect(() => {
-		captionTransitionState(homeSliderIndex);
-	}, [homeSliderIndex]);
+		captionTransitionState(home_slider_index);
+	}, [home_slider_index]);
 
 	return (
 		<Swiper {...params}>

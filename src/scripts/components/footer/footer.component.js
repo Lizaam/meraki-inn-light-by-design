@@ -1,14 +1,8 @@
 import React, { useContext } from 'react';
-
-// Styles
 import './footer.component.scss';
 import '../../../styles/_global.scss';
-
-// Libraries
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-// Context
 import { ActiveNavItemContext } from '../../../App';
 
 const Footer = (props) => {

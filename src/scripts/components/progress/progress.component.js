@@ -1,6 +1,4 @@
 import React from 'react';
-
-// Styles
 import './progress.component.scss';
 import '../../../styles/_global.scss';
 
