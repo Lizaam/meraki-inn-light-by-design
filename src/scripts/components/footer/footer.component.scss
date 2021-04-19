@@ -1,5 +1,11 @@
 @import '../../../styles/colors';
 
+.link-disabled {
+    a {
+        pointer-events: none;
+    }
+}
+
 #c-footer {
     background-color: $dark-color;
     
