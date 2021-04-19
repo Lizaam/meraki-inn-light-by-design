@@ -114,20 +114,34 @@ const NavigationComponent = () => {
                         <Dropdown.Header>Products</Dropdown.Header>
                         <Dropdown.Divider />
 
-                        <Link className="nav-item" to={{ pathname: '/catalogue', data: { products: 'all' } }} onClick={handleNavItem}>All Products</Link>
-                      </div>
-                      <div className="mega-menu-item">
-                        <Dropdown.Header>Products</Dropdown.Header>
-                        <Dropdown.Divider />
-
                         <Link
                           className="nav-item"
-                          to={{ pathname: '/catalogue', data: { products: 'chandeliers' } }}
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'all'
+                            }
+                          }}
+                          onClick={handleNavItem}>All Products
+                        </Link>
+                        <Link
+                          className="nav-item"
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'chandelier'
+                            }
+                          }}
                           onClick={handleNavItem}>Chandeliers
                         </Link>
                         <Link
                           className="nav-item"
-                          to={{ pathname: '/catalogue', data: { products: 'lamps' } }}
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'lamp'
+                            }
+                          }}
                           onClick={handleNavItem}>Lamps
                         </Link>
                       </div>
@@ -137,17 +151,32 @@ const NavigationComponent = () => {
 
                         <Link
                           className="nav-item"
-                          to={{ pathname: '/catalogue', data: { products: 'beaded' } }}
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'beaded'
+                            }
+                          }}
                           onClick={handleNavItem}>Beaded
                         </Link>
                         <Link
                           className="nav-item"
-                          to={{ pathname: '/catalogue', data: { products: 'crystals' } }}
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'crystals'
+                            }
+                          }}
                           onClick={handleNavItem}>Crystals
                         </Link>
                         <Link
                           className="nav-item"
-                          to={{ pathname: '/catalogue', data: { products: 'retro' } }}
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'retro'
+                            }
+                          }}
                           onClick={handleNavItem}>Retro
                         </Link>
                       </div>
@@ -203,27 +232,37 @@ const NavigationComponent = () => {
               <Dropdown.Menu>
                 <div className="light-mega-menu">
                   <div className="mega-menu-item">
-                    <Dropdown.Header>Products</Dropdown.Header>
-                    <Dropdown.Divider />
-
-                    <Link
-                      className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'all' } }}
-                      onClick={handleNavItem}>All Products
-                    </Link>
-                  </div>
-                  <div className="mega-menu-item">
                     <Dropdown.Header>Categories</Dropdown.Header>
                     <Dropdown.Divider />
 
                     <Link
                       className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'chandeliers' } }}
+                      to={{
+                        pathname: '/catalogue',
+                        data: {        
+                          products: 'all'
+                        }
+                      }}
+                      onClick={handleNavItem}>All Products
+                        </Link>
+                    <Link
+                      className="nav-item"
+                      to={{
+                        pathname: '/catalogue',
+                        data: {
+                          products: 'chandelier'
+                        }
+                      }}
                       onClick={handleNavItem}>Chandeliers
                     </Link>
                     <Link
                       className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'lamps' } }}
+                      to={{
+                        pathname: '/catalogue',
+                        data: {
+                          products: 'lamp'
+                        }
+                      }}
                       onClick={handleNavItem}>Lamps
                     </Link>
                   </div>
@@ -232,20 +271,35 @@ const NavigationComponent = () => {
                     <Dropdown.Divider />
 
                     <Link
-                      className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'beaded' } }}
-                      onClick={handleNavItem}>Beaded
-                    </Link>
-                    <Link
-                      className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'crystals' } }}
-                      onClick={handleNavItem}>Crystals
-                    </Link>
-                    <Link
-                      className="nav-item"
-                      to={{ pathname: '/catalogue', data: { products: 'retro' } }}
-                      onClick={handleNavItem}>Retro
-                    </Link>
+                          className="nav-item"
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'beaded'
+                            }
+                          }}
+                          onClick={handleNavItem}>Beaded
+                        </Link>
+                        <Link
+                          className="nav-item"
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'crystals'
+                            }
+                          }}
+                          onClick={handleNavItem}>Crystals
+                        </Link>
+                        <Link
+                          className="nav-item"
+                          to={{
+                            pathname: '/catalogue',
+                            data: {
+                              products: 'retro'
+                            }
+                          }}
+                          onClick={handleNavItem}>Retro
+                        </Link>
                   </div>
                 </div>
               </Dropdown.Menu>

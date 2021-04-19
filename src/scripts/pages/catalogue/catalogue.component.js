@@ -1,174 +1,176 @@
 import React, { useState, useContext, useEffect } from 'react';
-
-// Libraries
-import { Container, Row, Col, Button, Accordion, Card, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Form, FormGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-// Styles
 import './catalogue.component.scss';
-
-// Components
 import PageIndication from '../../components/page-indication/page-indication.component';
 import ProgressComponent from '../../components/progress/progress.component';
 import CardIcons from '../../components/card-icons/card-icons.component';
-
-// Context
 import { ProductsInfoContext } from '../../../App';
-
-// Modules
 import CONSTANTS from '../../modules/constants';
 
 const CatalogueComponent = (data) => {
-  // Number of products to view
-  const CollectionIteration = 12;
-  var maximumProductsLengthReached = false;
+  var view_more_count = 12;
+  var max_products_view_reached = false;
+  var search_string = (data.location.data) ? data.location.data.products : 'all';
 
   const [product, setProduct] = useState({ loading: true, data: null });
-  const [productSize, setProductSize] = useState(CollectionIteration);
+  const [productSize, setProductSize] = useState(view_more_count);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
-  const products = (data.location.data) ? data.location.data.products : 'all';
 
-  const firstLetterCapitalize = (string) => {
+  useEffect(() => {
+    var get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
+    var storage_data = JSON.parse(get_products_from_storage);
+    var filtered_data = FilterProducts(search_string, storage_data.products);
+
+    setProduct({ loading: false, data: filtered_data });
+  }, [data, search_string]);
+
+  const FilterProducts = (filter, data) => {
+    var filter_products = data.filter(product => {
+      switch (filter.toLowerCase()) {
+        case CONSTANTS.searchTerms.all:
+          return product;
+        case CONSTANTS.searchTerms.chandelier:
+        case CONSTANTS.searchTerms.lamp:
+        case CONSTANTS.searchTerms.candle:
+          return product.info.type.includes(filter);
+        case CONSTANTS.searchTerms.beaded:
+        case CONSTANTS.searchTerms.crystals:
+        case CONSTANTS.searchTerms.retro:
+          return product.info.style.includes(filter);
+        case CONSTANTS.searchTerms.availableForBulk:
+        case CONSTANTS.searchTerms.notAvailableForBulk:
+          return filter === product.bulk.toLowerCase();
+        case CONSTANTS.searchTerms.fitting5x:
+        case CONSTANTS.searchTerms.fitting6x:
+        case CONSTANTS.searchTerms.fitting7x:
+        case CONSTANTS.searchTerms.fitting8x:
+        case CONSTANTS.searchTerms.moreThan8x:
+          return filter === product.globeType;
+        default:
+          return product;
+      }
+    })
+
+    return filter_products;
+  }
+
+  const CapitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  useEffect(() => {
-    const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
-    const storageData = JSON.parse(IsProductStorageKeySet);
-
-    setProduct({
-      loading: false,
-      data: storageData.data.products
-    });
-  }, []);
-
-  const loadMoreItems = () => {
-    setProductSize(productSize + CollectionIteration);
-  }
-
-  const titleUpdate = (title) => {
+  const FormatProductTitle = (title) => {
     return title.split('-').join(' ');
   }
 
-  const seeMoreItems = () => {
-    maximumProductsLengthReached = (productSize > product.data.length - 1);
+  const LoadMoreProducts = () => {
+    setProductSize(productSize + view_more_count);
+  }
 
-    if (maximumProductsLengthReached) {
-      return (
-        <React.Fragment></React.Fragment>
-      );
+  const ViewMoreProducts = () => {
+    max_products_view_reached = productSize > product.data.length - 1;
+
+    if (max_products_view_reached) {
+      return <React.Fragment></React.Fragment>;
     } else {
       return (
-        <Button type="button" variant="warning" className="text-light font-weight-bold" onClick={loadMoreItems}>
+        <Button
+          type="button"
+          variant="dark"
+          className="text-light font-weight-bold mt-4 mb-2"
+          onClick={LoadMoreProducts}>
           See More
         </Button>
       );
     }
-  };
+  }
+
+  const DetermineMaxPrice = (data) => {
+    var prices = data.map(obj => parseInt(obj.price.substring(1)));
+    var prices_array_cleanup = prices.filter(element => { return !isNaN(element) })
+    
+    if (prices_array_cleanup.length > 0) {
+      var maxPrice = prices_array_cleanup.reduce((a, b) => {
+        return Math.max(a, b);
+      })
+  
+      return maxPrice;
+    } else {
+      return 0;
+    }
+  }
+
+  const CurrencyFormatter = new Intl.NumberFormat(
+    'en-ZA', {
+      style: 'currency',
+      currency: 'ZAR',
+      minimumFractionDigits: 2
+    }
+  )
 
   if (product.loading) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <ProgressComponent />
       </div>
-    );
+    )
   } else {
-    var productsSlice = product.data.slice(0, productSize);
+    var slicedProductsList = product.data.slice(0, productSize);
 
     return (
       <React.Fragment>
         <PageIndication page="Catalogue" />
-  
         <Container className="py-4">
           <Row>
             <Col md={3}>
               <div id="light-left-s-1">
-                <div className="light-left-search-links">Home / Catalogue {` / ` + firstLetterCapitalize(products)}</div>
+                <div className="light-left-search-links">
+                  Home / Catalogue {` / ` + CapitalizeFirstLetter(search_string)}
+                </div>
                 <h5>Shop By</h5>
               </div>
-  
               <hr />
-  
               <div id="light-left-s-2">
-                <Accordion>
-                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="0">
-                    <p className="s2-sort-header">
-                      Categories
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body className="p-0">
-                      <Form>
-                        <Form.Group id="s-2-checkboxes">
-                          <Form.Check type="checkbox" label="Chandeliers" className="checkbox-text" />
-                          <Form.Check type="checkbox" label="Lamps" className="checkbox-text" />
-                        </Form.Group>
-                      </Form>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="1">
-                    <p className="s2-sort-header">
-                      Price
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="1">
-                    <Card.Body className="p-0">
-                      <Form>
-                        <Form.Group controlId="formBasicRange">
-                          <Form.Label>Range</Form.Label>
-                          <Form.Control type="range" />
-                        </Form.Group>
-                      </Form>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                  <Accordion.Toggle as={Card.Header} className="border-0 bg-transparent px-0 s-2-toggle-container" eventKey="2">
-                    <p className="s2-sort-header">
-                      Type
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="2">
-                    <Card.Body className="p-0">
-                      <Form>
-                        <Form.Group controlId="formBasicRange">
-                          <Form.Check type="checkbox" label="Beaded" className="checkbox-text" />
-                          <Form.Check type="checkbox" label="Crystals" className="checkbox-text" />
-                          <Form.Check type="checkbox" label="Retro" className="checkbox-text" />
-                        </Form.Group>
-                      </Form>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Accordion>
+                
               </div>
             </Col>
             <Col md={9}>
               <Row>
                 {
-                  productsSlice.map((value, key) => {
+                  slicedProductsList.length > 0 
+                  ?
+                  slicedProductsList.map((value, key) => {
                     return (
-                      <Col md={4} sm={4} xs={12} className="mb-4" key={key}>
+                      <Col md={3} sm={6} xs={12} className="mb-4" key={key}>
                         <Link
                           to={'/product-info'}
-                          className="text-dark"
-                        >
-                          <Card onClick={() => productInfoState(value)}>
+                          className="text-dark">
+                          <Card>
                             <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
-  
+
                             <Card.Body className="small-text">
-                              <h6>{titleUpdate(value.name)}</h6>
+                              <h6>{FormatProductTitle(value.name)}</h6>
                               <Card.Text className="mb-0">Style: {value.info.style}</Card.Text>
                               <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
                               <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
                               <CardIcons product={value} showAdditionalText={false} />
+                              <Button type="button" variant="warning" className="text-light font-weight-bold mt-4" onClick={() => productInfoState(value)}>
+                                View Info
+                              </Button>
                             </Card.Body>
                           </Card>
                         </Link>
                       </Col>
                     );
                   })
+                  :
+                  <React.Fragment>
+                    <h4 className="font-weight-light mb-0">No products to display.</h4>
+                  </React.Fragment>
                 }
-  
+
                 <Col md={12} className="text-center">
-                  {seeMoreItems()}
+                  {ViewMoreProducts()}
                 </Col>
               </Row>
             </Col>

@@ -14,4 +14,11 @@
 .small-text {
   font-size: 75%;
   min-height: 177px;
+
+  &.card-body {
+    h6 {
+      min-height: 50px;
+      margin: 0;
+    }
+  }
 }

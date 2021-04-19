@@ -40,7 +40,7 @@
   text-transform: uppercase;
 }
 .logo-tagline {
-  letter-spacing: 5px;
+  letter-spacing: 0.2em;
   margin: 0 0 5px;
 }
 #main-nav {
@@ -304,4 +304,8 @@
     float: left;
     padding: 0 10px;
   }
+}
+
+.link-disabled {
+  pointer-events: none;
 }

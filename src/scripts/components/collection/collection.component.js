@@ -5,7 +5,6 @@ import './collection.component.scss';
 import '../../../styles/_global.scss';
 
 // Libraries
-import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 
@@ -19,35 +18,42 @@ import { ProductsInfoContext } from '../../../App';
 // Modules
 import CONSTANTS from '../../modules/constants';
 
-const Collection = (props) => {
-  // Number of products to view
-  const CollectionIteration = 4;
-  const CollectionLimit = 12;
+// Providers
+import { GetAllProducts } from '../../providers/products.provider';
 
+const Collection = (props) => {
+  // local variables
+  const CollectionIteration = 4;
+  const CollectionLimit = CollectionIteration * 2;
+
+  // state and context
   const [product, setProduct] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(CollectionIteration);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
+
+  // info logging
+  if (productInfo.length > 0) {
+    console.log(productInfo);
+  }
 
   useEffect(() => {
     const IsProductStorageKeySet = localStorage.getItem(CONSTANTS.storageKeys.all);
 
     if (!IsProductStorageKeySet) {
-      (async function () {
-        const response = await Axios(CONSTANTS.api.host + CONSTANTS.api.requests.getAll);
-
+      GetAllProducts().then(data => {
         setProduct({
           loading: false,
-          data: response.data.products
+          data: data.products
         });
 
-        localStorage.setItem(CONSTANTS.storageKeys.all, JSON.stringify(response));
-      })();
+        localStorage.setItem(CONSTANTS.storageKeys.all, JSON.stringify(data));
+      })
     } else {
       const storageData = JSON.parse(IsProductStorageKeySet);
 
       setProduct({
         loading: false,
-        data: storageData.data.products
+        data: storageData.products
       });
     }
   }, []);
@@ -64,8 +70,15 @@ const Collection = (props) => {
 
   const redirectToCatalogue = () => {
     return (
-      <Link to="/catalogue">
-        <Button type="button" variant="warning" className="text-light font-weight-bold">
+      <Link
+        to={{
+          pathname: '/catalogue',
+          data: {
+            type: 'product',
+            products: 'all'
+          }
+        }}>
+        <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2">
           View Catalogue
         </Button>
       </Link>
@@ -74,7 +87,7 @@ const Collection = (props) => {
 
   const seeMoreItems = () => {
     return (
-      <Button type="button" variant="warning" className="text-light font-weight-bold" onClick={loadMoreItems}>
+      <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2" onClick={loadMoreItems}>
         See More
       </Button>
     );

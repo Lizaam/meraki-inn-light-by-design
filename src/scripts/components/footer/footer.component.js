@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { ActiveNavItemContext } from '../../../App';
 
 const Footer = (props) => {
-	const [ navItem ] = useContext(ActiveNavItemContext);
+	const [navItem] = useContext(ActiveNavItemContext);
 
 	return (
 		<Container fluid id="c-footer">
@@ -49,23 +49,36 @@ const Footer = (props) => {
 					<h5 className="font-weight-light h5-footer-margin-bottom">Categories</h5>
 
 					<div className="footer-col-2-info">
-						<Link 
-							to={{ pathname: '/catalogue', data: { products: 'chandeliers' } }}			
-							onClick={props.handleNavItem}>Chandeliers
+						<Link
+							className="nav-item"
+							to={{
+								pathname: '/catalogue',
+								data: {
+									products: 'chandelier'
+								}
+							}}>Chandeliers
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
-							to={{ pathname: '/catalogue', data: { products: 'lamps' } }}
-              onClick={props.handleNavItem}>Lamps
+						<Link
+							to={{ 
+								pathname: '/catalogue', 
+								data: { 
+									products: 'lamp' 
+								} 
+							}}>Lamps
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
-							to={{ pathname: '/catalogue', data: { products: 'candles' } }}
-							onClick={props.handleNavItem}>Candles
+						<Link
+							to={{ 
+								pathname: '/catalogue', 
+								data: { 
+									products: 'candle' 
+								} 
+							}}>Candles
 						</Link>
 					</div>
 				</Col>
@@ -73,41 +86,41 @@ const Footer = (props) => {
 					<h5 className="font-weight-light h5-footer-margin-bottom">Information</h5>
 
 					<div className="footer-col-3-info">
-						<Link 
+						<Link
 							to="/about"
 							onClick={props.handleNavItem}>About Us
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/support"
 							onClick={props.handleNavItem}>Support
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/faqs"
 							onClick={props.handleNavItem}>FAQs
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/services"
 							className={navItem === "nav-item-services" ? "nav-item nav-item-active" : "nav-item"}
-              data-item="nav-item-services"
-              onClick={props.handleNavItem}>Services
+							data-item="nav-item-services"
+							onClick={props.handleNavItem}>Services
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/contact"
 							className={navItem === "nav-item-contact" ? "nav-item nav-item-active" : "nav-item"}
-              data-item="nav-item-contact"
-              onClick={props.handleNavItem}>Contact Us
+							data-item="nav-item-contact"
+							onClick={props.handleNavItem}>Contact Us
 						</Link>
 					</div>
 				</Col>
@@ -115,21 +128,21 @@ const Footer = (props) => {
 					<h5 className="font-weight-light h5-footer-margin-bottom">Quick Links</h5>
 
 					<div className="footer-col-3-info">
-						<Link 
+						<Link
 							to="/terms-and-conditions"
 							onClick={props.handleNavItem}>Terms & Conditions
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/privacy"
 							onClick={props.handleNavItem}>Privacy Policy
 						</Link>
 					</div>
 
 					<div className="footer-col-2-info">
-						<Link 
+						<Link
 							to="/return-policy"
 							onClick={props.handleNavItem}>Return Policy
 						</Link>
@@ -145,7 +158,7 @@ const Footer = (props) => {
 							<Form>
 								<Form.Group controlId="formNewsletter">
 									<Form.Control type="email" placeholder="Email Address" className="mb-3 w-75" />
-									<Button variant={"info"} id="btn-newsletter">Submit</Button>
+									<Button variant="warning" className="text-light" id="btn-newsletter">Submit</Button>
 								</Form.Group>
 							</Form>
 						</div>

@@ -1,7 +1,8 @@
 #light-left-s-1 {
   .light-left-search-links {
-    font-size: 8pt;
+    font-size: 10pt;
     margin-bottom: 20px;
+    text-decoration: underline;
   }
   h5 {
     font-weight: 400;
@@ -9,6 +10,17 @@
 }
 
 #light-left-s-2 {
+  .filter-group-container {
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-bottom: 20px;
+
+    &.hidden {
+      height: 0 !important;
+    }
+  }
+
   .s-2-toggle-container {
     height: 40px;
     cursor: pointer;
@@ -33,4 +45,16 @@
     cursor: pointer;
     margin-left: 15px;
   }
+}
+
+.custom-range::-webkit-slider-thumb {
+  background: gray;
+}
+
+.custom-range::-moz-range-thumb {
+  background: gray;
+}
+
+.custom-range::-ms-thumb {
+  background: gray;
 }
