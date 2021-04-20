@@ -1,12 +1,6 @@
 import React from 'react';
-
-// Libraries
 import { Container, Row, Col } from 'react-bootstrap';
-
-// Styles
 import './about.component.scss';
-
-// Component
 import PageIndication from '../../components/page-indication/page-indication.component';
 import AboutImg from '../../../assets/images/about-bg.jpg';
 

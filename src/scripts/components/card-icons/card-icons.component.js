@@ -1,9 +1,5 @@
 import React from 'react';
-
-// Stylesheets
 import './card-icons.component.scss';
-
-// Assets
 import Beaded from '../../../assets/images/icons/beaded.png';
 import Retro from '../../../assets/images/icons/retro.png';
 import Crystals from '../../../assets/images/icons/crystals.png';
@@ -11,7 +7,7 @@ import Crystals from '../../../assets/images/icons/crystals.png';
 const CardIcons = (props) => {
   const icons = [];
 
-  const differentStylesText = (style) => {
+  const DifferentStylesText = (style) => {
     switch (style.toLowerCase()) {
       case 'beaded':
         return <span>Beaded Style Design</span>
@@ -43,7 +39,7 @@ const CardIcons = (props) => {
   if (props.showAdditionalText) {
     return (
       <React.Fragment>
-        <span className="card-icon">{differentStylesText(props.product.info.style)} | {icons}</span>
+        <span className="card-icon">{DifferentStylesText(props.product.info.style)} | {icons}</span>
       </React.Fragment>
     )
   } else {

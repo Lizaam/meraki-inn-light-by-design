@@ -1,9 +1,5 @@
 import React from 'react';
-
-// Styles
 import './page-indication.component.scss';
-
-// Libraries
 import { Row, Col, Container } from 'react-bootstrap';
 
 const PageIndication = (props) => {

@@ -1,18 +1,10 @@
 import React, { useState, useContext } from 'react';
-
-// Styles
 import './navigation.component.scss';
 import '../../../styles/_global.scss';
-
-// Libraries
 import { Container, Navbar, Row, Col, Form, InputGroup, Dropdown } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
-
-// Context
 import { ActiveNavItemContext } from '../../../App';
-
-// Components
 import HomeComponent from '../../pages/home/home.component';
 import CatalogueComponent from '../../pages/catalogue/catalogue.component';
 import FeaturesComponent from '../../pages/features/features.component';
@@ -34,17 +26,17 @@ const NavigationComponent = () => {
   const [navItem, navItemState] = useContext(ActiveNavItemContext);
   const [sideNav, sideNavState] = useState(false);
 
-  const toggleSideNavState = () => {
+  const ToggleSideNavState = () => {
     sideNavState(!sideNav);
-  };
+  }
 
-  const handleNavItem = (event) => {
+  const HandleNavItem = (event) => {
     navItemState(event.currentTarget.dataset.item);
-  };
+  }
 
   $(window).on('scroll', (event) => {
     event.currentTarget.scrollY > 70 ? $('#c-2').addClass('main-nav-fixed') : $('#c-2').removeClass('main-nav-fixed');
-  });
+  })
 
   return (
     <Router>
@@ -71,10 +63,10 @@ const NavigationComponent = () => {
             <Col md={4} sm={12}>
               <ul className="list-unstyled list-group list-group-horizontal nav-header-right-list-group justify-content-end">
                 <li className="list-item mr-4">
-                  <Link to="/support" onClick={handleNavItem}>Support</Link>
+                  <Link to="/support" onClick={HandleNavItem}>Support</Link>
                 </li>
                 <li className="list-item mr-4">
-                  <Link to="/about" onClick={handleNavItem}>About</Link>
+                  <Link to="/about" onClick={HandleNavItem}>About</Link>
                 </li>
               </ul>
             </Col>
@@ -87,9 +79,9 @@ const NavigationComponent = () => {
               <i
                 className="fa fa-bars"
                 aria-hidden="true"
-                onClick={toggleSideNavState}
+                onClick={ToggleSideNavState}
               ></i>
-              <Link to="/home" className="text-dark" data-item="nav-item-home" onClick={handleNavItem}>
+              <Link to="/home" className="text-dark" data-item="nav-item-home" onClick={HandleNavItem}>
                 <h2 className="logo-heading font-weight-light mb-0">Lights By Design</h2>
                 <p className="logo-tagline">Meraki Innovations</p>
               </Link>
@@ -100,7 +92,7 @@ const NavigationComponent = () => {
                   to="/home"
                   className={navItem === "nav-item-home" ? "nav-item nav-item-active" : "nav-item"}
                   data-item="nav-item-home"
-                  onClick={handleNavItem}>Home
+                  onClick={HandleNavItem}>Home
                 </Link>
 
                 <Dropdown>
@@ -122,7 +114,7 @@ const NavigationComponent = () => {
                               products: 'all'
                             }
                           }}
-                          onClick={handleNavItem}>All Products
+                          onClick={HandleNavItem}>All Products
                         </Link>
                         <Link
                           className="nav-item"
@@ -132,7 +124,7 @@ const NavigationComponent = () => {
                               products: 'chandelier'
                             }
                           }}
-                          onClick={handleNavItem}>Chandeliers
+                          onClick={HandleNavItem}>Chandeliers
                         </Link>
                         <Link
                           className="nav-item"
@@ -142,7 +134,7 @@ const NavigationComponent = () => {
                               products: 'lamp'
                             }
                           }}
-                          onClick={handleNavItem}>Lamps
+                          onClick={HandleNavItem}>Lamps
                         </Link>
                       </div>
                       <div className="mega-menu-item">
@@ -157,7 +149,7 @@ const NavigationComponent = () => {
                               products: 'beaded'
                             }
                           }}
-                          onClick={handleNavItem}>Beaded
+                          onClick={HandleNavItem}>Beaded
                         </Link>
                         <Link
                           className="nav-item"
@@ -167,7 +159,7 @@ const NavigationComponent = () => {
                               products: 'crystals'
                             }
                           }}
-                          onClick={handleNavItem}>Crystals
+                          onClick={HandleNavItem}>Crystals
                         </Link>
                         <Link
                           className="nav-item"
@@ -177,7 +169,7 @@ const NavigationComponent = () => {
                               products: 'retro'
                             }
                           }}
-                          onClick={handleNavItem}>Retro
+                          onClick={HandleNavItem}>Retro
                         </Link>
                       </div>
                     </div>
@@ -188,14 +180,14 @@ const NavigationComponent = () => {
                   to="/services"
                   className={navItem === "nav-item-services" ? "nav-item nav-item-active" : "nav-item"}
                   data-item="nav-item-services"
-                  onClick={handleNavItem}> Services
+                  onClick={HandleNavItem}> Services
                 </Link>
 
                 <Link
                   to="/contact"
                   className={navItem === "nav-item-contact" ? "nav-item nav-item-active" : "nav-item"}
                   data-item="nav-item-contact"
-                  onClick={handleNavItem}>Contact Us
+                  onClick={HandleNavItem}>Contact Us
                 </Link>
               </Navbar>
             </Col>
@@ -223,10 +215,10 @@ const NavigationComponent = () => {
             <i
               className="fa fa-times"
               aria-hidden="true"
-              onClick={toggleSideNavState}
+              onClick={ToggleSideNavState}
             ></i>
 
-            <Link to="/home" className="nav-item" onClick={handleNavItem}>Home</Link>
+            <Link to="/home" className="nav-item" onClick={HandleNavItem}>Home</Link>
             <Dropdown>
               <Dropdown.Toggle variant="transparent" id="catalogue-dropdown">Catalogue</Dropdown.Toggle>
               <Dropdown.Menu>
@@ -243,7 +235,7 @@ const NavigationComponent = () => {
                           products: 'all'
                         }
                       }}
-                      onClick={handleNavItem}>All Products
+                      onClick={HandleNavItem}>All Products
                         </Link>
                     <Link
                       className="nav-item"
@@ -253,7 +245,7 @@ const NavigationComponent = () => {
                           products: 'chandelier'
                         }
                       }}
-                      onClick={handleNavItem}>Chandeliers
+                      onClick={HandleNavItem}>Chandeliers
                     </Link>
                     <Link
                       className="nav-item"
@@ -263,7 +255,7 @@ const NavigationComponent = () => {
                           products: 'lamp'
                         }
                       }}
-                      onClick={handleNavItem}>Lamps
+                      onClick={HandleNavItem}>Lamps
                     </Link>
                   </div>
                   <div className="mega-menu-item">
@@ -278,7 +270,7 @@ const NavigationComponent = () => {
                               products: 'beaded'
                             }
                           }}
-                          onClick={handleNavItem}>Beaded
+                          onClick={HandleNavItem}>Beaded
                         </Link>
                         <Link
                           className="nav-item"
@@ -288,7 +280,7 @@ const NavigationComponent = () => {
                               products: 'crystals'
                             }
                           }}
-                          onClick={handleNavItem}>Crystals
+                          onClick={HandleNavItem}>Crystals
                         </Link>
                         <Link
                           className="nav-item"
@@ -298,7 +290,7 @@ const NavigationComponent = () => {
                               products: 'retro'
                             }
                           }}
-                          onClick={handleNavItem}>Retro
+                          onClick={HandleNavItem}>Retro
                         </Link>
                   </div>
                 </div>
@@ -308,13 +300,13 @@ const NavigationComponent = () => {
               to="/services"
               className={navItem === "nav-item-services" ? "nav-item nav-item-active" : "nav-item"}
               data-item="nav-item-services"
-              onClick={handleNavItem}>Services
+              onClick={HandleNavItem}>Services
             </Link>
             <Link
               to="/contact"
               className={navItem === "nav-item-contact" ? "nav-item nav-item-active" : "nav-item"}
               data-item="nav-item-contact"
-              onClick={handleNavItem}>Contact Us
+              onClick={HandleNavItem}>Contact Us
             </Link>
           </div>
         </div>
@@ -324,7 +316,7 @@ const NavigationComponent = () => {
             <Redirect to="/home" />
           </Route>
           <Route exact path="/home">
-            <HomeComponent handleNavItem={handleNavItem} />
+            <HomeComponent HandleNavItem={HandleNavItem} />
           </Route>
           <Route path="/catalogue" component={CatalogueComponent} />
           <Route path="/product-info" component={ProductInfoComponent} />
@@ -332,7 +324,7 @@ const NavigationComponent = () => {
           <Route path="/services" component={ServicesComponent} />
           <Route path="/contact" component={ContactComponent} />
           <Route path="/support">
-            <SupportComponent pageView={true} handleNavItem={handleNavItem} />
+            <SupportComponent pageView={true} HandleNavItem={HandleNavItem} />
           </Route>
           <Route path="/about" component={AboutComponent} />
           <Route path="/faqs" component={FaqsComponent} />
@@ -343,7 +335,7 @@ const NavigationComponent = () => {
           <Redirect to="/home" />
         </Switch>
 
-        <Footer handleNavItem={handleNavItem} />
+        <Footer HandleNavItem={HandleNavItem} />
         <ScrollToTop />
       </ResetScroll>
     </Router>

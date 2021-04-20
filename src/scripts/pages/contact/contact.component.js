@@ -1,12 +1,6 @@
 import React from 'react';
-
-// Libraries
 import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
-
-// Styles
 import './contact.component.scss';
-
-// Components
 import PageIndication from '../../components/page-indication/page-indication.component';
 
 const ContactComponent = () => {

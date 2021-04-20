@@ -1,14 +1,10 @@
 import React from 'react';
-
-// Styles
 import './scroll-to-top.component.scss';
 import '../../../styles/_global.scss';
-
-// Libraries
 import $ from 'jquery';
 
 const ScrollToTop = () => {
-  const animateScrollToTop = () => {
+  const AnimateScrollToTop = () => {
     $('html, body').animate({
       scrollTop: 0
     }, 800);
@@ -23,7 +19,7 @@ const ScrollToTop = () => {
       id="back-to-top" 
       className="btn btn-light btn-lg back-to-top"
       role="button"
-      onClick={animateScrollToTop}
+      onClick={AnimateScrollToTop}
     >
       <i className="fa fa-chevron-up"></i>
     </div>

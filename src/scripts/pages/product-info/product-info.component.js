@@ -18,11 +18,11 @@ const ProductInfoComponent = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-  const updateTabState = (event) => {
+  const UpdateTabState = (event) => {
     tabState(event.currentTarget.dataset.tab);
   }
 
-  const toggleAdditionalInformation = (tab) => {
+  const ToggleAdditionalInformation = (tab) => {
     switch (tab.toLowerCase()) {
       case 'product function':
         return <div>{ProductDictionary[productInfo.info.type]}</div>
@@ -33,23 +33,21 @@ const ProductInfoComponent = () => {
     }
   }
 
-  const updateExpandState = () => {
+  const UpdateExpandState = () => {
     expandDescription(!description);
   }
 
-  const images = [
-    productInfo.assets.imgSrc
-  ]
+  const images = [ productInfo.assets.imgSrc ]
 
-  const openImageViewer = useCallback((index) => {
+  const OpenImageViewer = useCallback((index) => {
     setCurrentImage(index);
     setIsViewerOpen(true);
   }, []);
 
-  const closeImageViewer = () => {
+  const CloseImageViewer = () => {
     setCurrentImage(0);
     setIsViewerOpen(false);
-  };
+  }
 
   return (
     <React.Fragment>
@@ -62,7 +60,7 @@ const ProductInfoComponent = () => {
               <img
                 src={productInfo.assets.imgSrc}
                 className="rounded d-block mx-auto" alt="..."
-                onClick={() => openImageViewer(0)}
+                onClick={() => OpenImageViewer(0)}
               />
             </div>
 
@@ -73,7 +71,7 @@ const ProductInfoComponent = () => {
                 {
                   tabs.map((value, key) => {
                     return (
-                      <li className={tab === value ? 'tab-active' : ''} key={key} data-tab={value} onClick={updateTabState}>
+                      <li className={tab === value ? 'tab-active' : ''} key={key} data-tab={value} onClick={UpdateTabState}>
                         { value}
                       </li>
                     )
@@ -83,7 +81,7 @@ const ProductInfoComponent = () => {
             </div>
 
             <div className="info-section">
-              {toggleAdditionalInformation(tab)}
+              {ToggleAdditionalInformation(tab)}
             </div>
           </Col>
           <Col md={4} sm={6} xs={12}>
@@ -138,7 +136,7 @@ const ProductInfoComponent = () => {
                 <li>Material: Metal and steel</li>
               </ul>
 
-              <Button variant={"light"} id="btn-learn-more" className="d-block mx-auto" onClick={updateExpandState}>
+              <Button variant={"light"} id="btn-learn-more" className="d-block mx-auto" onClick={UpdateExpandState}>
                 {description ? `See less` : `Learn more about this item`}
               </Button>
             </div>
@@ -149,7 +147,7 @@ const ProductInfoComponent = () => {
           <ImageViewer
             src={images}
             currentIndex={currentImage}
-            onClose={closeImageViewer}
+            onClose={CloseImageViewer}
           />
         )}
       </Container>
