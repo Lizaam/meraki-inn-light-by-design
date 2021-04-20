@@ -1,0 +1,58 @@
+input[name="formProductTypeRadios"] {
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
+  -ms-appearance: auto !important;
+  -o-appearance: auto !important;
+  appearance: auto !important;
+}
+input[name="formProductTypeRadios"]:checked::before {
+  content: '';
+}
+
+.form-check-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 2px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  transition: all 0.15s ease-out 0s;
+  border: 1px solid #9faab7;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.form-check-input:hover {
+  background: #9faab7;
+}
+.form-check-input:checked {
+  background: #3f75ff;
+  border: 1px solid #3f75ff;
+}
+.form-check-input:checked::before {
+  height: 15px;
+  width: 13px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 12px;
+  text-align: center;
+  line-height: 13px;
+}
+.form-check-input:checked::after {
+  background: #3f75ff;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}

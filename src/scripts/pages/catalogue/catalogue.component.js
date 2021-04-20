@@ -7,6 +7,8 @@ import ProgressComponent from '../../components/progress/progress.component';
 import CardIcons from '../../components/card-icons/card-icons.component';
 import { ProductsInfoContext } from '../../../App';
 import CONSTANTS from '../../modules/constants';
+import { RadioButtons } from '../../components/filtering/radio-buttons.component';
+import { CheckboxInputs } from '../../components/filtering/checkbox-inputs.components';
 
 const CatalogueComponent = (data) => {
   var view_more_count = 12;
@@ -131,7 +133,8 @@ const CatalogueComponent = (data) => {
               </div>
               <hr />
               <div id="light-left-s-2">
-                
+                <RadioButtons />
+                <CheckboxInputs />
               </div>
             </Col>
             <Col md={9}>
