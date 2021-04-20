@@ -9,6 +9,7 @@ import { ProductsInfoContext } from '../../../App';
 import CONSTANTS from '../../modules/constants';
 import { RadioButtons } from '../../components/filtering/radio-buttons.component';
 import { CheckboxInputs } from '../../components/filtering/checkbox-inputs.components';
+import { PriceRangeInput } from '../../components/filtering/price-slider.component';
 
 const CatalogueComponent = (data) => {
   var view_more_count = 12;
@@ -134,6 +135,7 @@ const CatalogueComponent = (data) => {
               <hr />
               <div id="light-left-s-2">
                 <RadioButtons />
+                <PriceRangeInput />
                 <CheckboxInputs />
               </div>
             </Col>
