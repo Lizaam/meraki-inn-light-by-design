@@ -1,8 +1,6 @@
 export default class CONSTANTS {
   static storageKeys = {
-    all: 'all',
-    lamps: 'lamp',
-    chandelier: 'chandelier'
+    all: 'all'
   }
 
   static api = {
