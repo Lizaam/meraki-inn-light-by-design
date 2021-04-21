@@ -19,6 +19,7 @@ const CatalogueComponent = (data) => {
   const [product, setProduct] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
+  const [productType, setProductType] = useState('');
 
   useEffect(() => {
     var get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
@@ -88,28 +89,9 @@ const CatalogueComponent = (data) => {
     }
   }
 
-  const DetermineMaxPrice = (data) => {
-    var prices = data.map(obj => parseInt(obj.price.substring(1)));
-    var prices_array_cleanup = prices.filter(element => { return !isNaN(element) })
-    
-    if (prices_array_cleanup.length > 0) {
-      var maxPrice = prices_array_cleanup.reduce((a, b) => {
-        return Math.max(a, b);
-      })
-  
-      return maxPrice;
-    } else {
-      return 0;
-    }
+  const HandleProductTypeFiltering = (value) => {
+    setProductType(value);
   }
-
-  const CurrencyFormatter = new Intl.NumberFormat(
-    'en-ZA', {
-      style: 'currency',
-      currency: 'ZAR',
-      minimumFractionDigits: 2
-    }
-  )
 
   if (product.loading) {
     return (
@@ -119,6 +101,7 @@ const CatalogueComponent = (data) => {
     )
   } else {
     var slicedProductsList = product.data.slice(0, productSize);
+    var dataForChildComponentReset = productType;
 
     return (
       <React.Fragment>
@@ -134,9 +117,9 @@ const CatalogueComponent = (data) => {
               </div>
               <hr />
               <div id="light-left-s-2">
-                <RadioButtons />
-                <PriceRangeInput />
-                <CheckboxInputs />
+                <RadioButtons onProductDataChange={HandleProductTypeFiltering} />
+                <PriceRangeInput resetChildComponent={dataForChildComponentReset} />
+                <CheckboxInputs resetChildComponent={dataForChildComponentReset} />
               </div>
             </Col>
             <Col md={9}>
