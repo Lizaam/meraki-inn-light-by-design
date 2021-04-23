@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Card, Form, FormGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './catalogue.component.scss';
 import PageIndication from '../../components/page-indication/page-indication.component';
@@ -7,52 +7,54 @@ import ProgressComponent from '../../components/progress/progress.component';
 import CardIcons from '../../components/card-icons/card-icons.component';
 import { ProductsInfoContext } from '../../../App';
 import CONSTANTS from '../../modules/constants';
-import { RadioButtons } from '../../components/filtering/radio-buttons.component';
-import { CheckboxInputs } from '../../components/filtering/checkbox-inputs.components';
-import { PriceRangeInput } from '../../components/filtering/price-slider.component';
+import { FilterFormInputs } from '../../components/filtering/filter-form-inputs.components';
 
 const CatalogueComponent = (data) => {
   var view_more_count = 12;
   var max_products_view_reached = false;
   var search_string = (data.location.data) ? data.location.data.products : 'all';
 
-  const [product, setProduct] = useState({ loading: true, data: null });
+  const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
   const [productType, setProductType] = useState('');
 
   useEffect(() => {
-    var get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
-    var storage_data = JSON.parse(get_products_from_storage);
-    var filtered_data = FilterProducts(search_string, storage_data.products);
-
-    setProduct({ loading: false, data: filtered_data });
+    SetProductsFromStorage(search_string);
   }, [data, search_string]);
 
+  const SetProductsFromStorage = (filterString) => {
+    var get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
+    var storage_data = JSON.parse(get_products_from_storage);
+    var filtered_data = FilterProducts(filterString, storage_data.products);
+
+    setProductData({ loading: false, data: filtered_data });
+  }
+
   const FilterProducts = (filter, data) => {
-    var filter_products = data.filter(product => {
+    var filter_products = data.filter(obj => {
       switch (filter.toLowerCase()) {
         case CONSTANTS.searchTerms.all:
-          return product;
+          return obj;
         case CONSTANTS.searchTerms.chandelier:
         case CONSTANTS.searchTerms.lamp:
         case CONSTANTS.searchTerms.candle:
-          return product.info.type.includes(filter);
+          return obj.info.type.includes(filter);
         case CONSTANTS.searchTerms.beaded:
         case CONSTANTS.searchTerms.crystals:
         case CONSTANTS.searchTerms.retro:
-          return product.info.style.includes(filter);
+          return obj.info.style.includes(filter);
         case CONSTANTS.searchTerms.availableForBulk:
         case CONSTANTS.searchTerms.notAvailableForBulk:
-          return filter === product.bulk.toLowerCase();
+          return filter === obj.bulk.toLowerCase();
         case CONSTANTS.searchTerms.fitting5x:
         case CONSTANTS.searchTerms.fitting6x:
         case CONSTANTS.searchTerms.fitting7x:
         case CONSTANTS.searchTerms.fitting8x:
         case CONSTANTS.searchTerms.moreThan8x:
-          return filter === product.globeType;
+          return filter === obj.globeType;
         default:
-          return product;
+          return obj;
       }
     })
 
@@ -72,7 +74,7 @@ const CatalogueComponent = (data) => {
   }
 
   const ViewMoreProducts = () => {
-    max_products_view_reached = productSize > product.data.length - 1;
+    max_products_view_reached = productSize > productData.data.length - 1;
 
     if (max_products_view_reached) {
       return <React.Fragment></React.Fragment>;
@@ -91,17 +93,17 @@ const CatalogueComponent = (data) => {
 
   const HandleProductTypeFiltering = (value) => {
     setProductType(value);
+    SetProductsFromStorage(value);
   }
 
-  if (product.loading) {
+  if (productData.loading) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <ProgressComponent />
       </div>
     )
   } else {
-    var slicedProductsList = product.data.slice(0, productSize);
-    var dataForChildComponentReset = productType;
+    var slicedProductsList = productData.data.slice(0, productSize);
 
     return (
       <React.Fragment>
@@ -117,9 +119,7 @@ const CatalogueComponent = (data) => {
               </div>
               <hr />
               <div id="light-left-s-2">
-                <RadioButtons onProductDataChange={HandleProductTypeFiltering} />
-                <PriceRangeInput resetChildComponent={dataForChildComponentReset} />
-                <CheckboxInputs resetChildComponent={dataForChildComponentReset} />
+                <FilterFormInputs onProductDataChange={HandleProductTypeFiltering} />
               </div>
             </Col>
             <Col md={9}>

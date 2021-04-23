@@ -1,14 +1,3 @@
-input[name="formProductTypeRadios"] {
-  -webkit-appearance: auto !important;
-  -moz-appearance: auto !important;
-  -ms-appearance: auto !important;
-  -o-appearance: auto !important;
-  appearance: auto !important;
-}
-input[name="formProductTypeRadios"]:checked::before {
-  content: '';
-}
-
 .form-check-input {
   -webkit-appearance: none;
   -moz-appearance: none;
