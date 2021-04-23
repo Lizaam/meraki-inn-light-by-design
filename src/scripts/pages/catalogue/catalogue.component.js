@@ -106,7 +106,7 @@ const CatalogueComponent = (data) => {
     return (
       <React.Fragment>
         <PageIndication page="Catalogue" />
-        <Container className="py-4 c-w align-items-center row">
+        <Container className="py-4 c-w">
           <Row>
             <Col md={3}>
               <div id="light-left-s-1">
@@ -123,8 +123,7 @@ const CatalogueComponent = (data) => {
             <Col md={9}>
               <Row>
                 {
-                  slicedProductsList.length > 0 
-                  ?
+                  slicedProductsList.length > 0 ?
                   slicedProductsList.map((value, key) => {
                     return (
                       <Col md={3} sm={6} xs={12} className="mb-4" key={key}>
@@ -148,11 +147,8 @@ const CatalogueComponent = (data) => {
                         </Link>
                       </Col>
                     );
-                  })
-                  :
-                  <React.Fragment>
-                    <h4 className="font-weight-light mb-0">No products to display.</h4>
-                  </React.Fragment>
+                  }) :
+                  <h4 className="font-weight-light mb-0">No products to display.</h4>
                 }
 
                 <Col md={12} className="text-center">
