@@ -17,7 +17,6 @@ const CatalogueComponent = (data) => {
   const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
   const [productInfo, productInfoState] = useContext(ProductsInfoContext);
-  const [productType, setProductType] = useState('');
 
   useEffect(() => {
     SetProductsFromStorage(search_string);
@@ -92,7 +91,6 @@ const CatalogueComponent = (data) => {
   }
 
   const HandleProductTypeFiltering = (value) => {
-    setProductType(value);
     SetProductsFromStorage(value);
   }
 
@@ -108,7 +106,7 @@ const CatalogueComponent = (data) => {
     return (
       <React.Fragment>
         <PageIndication page="Catalogue" />
-        <Container className="py-4">
+        <Container className="py-4 c-w align-items-center row">
           <Row>
             <Col md={3}>
               <div id="light-left-s-1">
