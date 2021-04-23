@@ -15,7 +15,7 @@ const Collection = (props) => {
 
   const [product, setProduct] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(collection_iteration);
-  const [productInfo, productInfoState] = useContext(ProductsInfoContext);
+  const [, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
     const get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);

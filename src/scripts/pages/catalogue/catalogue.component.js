@@ -16,7 +16,7 @@ const CatalogueComponent = (data) => {
 
   const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
-  const [productInfo, productInfoState] = useContext(ProductsInfoContext);
+  const [, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
     SetProductsFromStorage(search_string);
