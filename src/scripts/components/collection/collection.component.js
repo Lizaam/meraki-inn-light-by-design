@@ -8,7 +8,7 @@ import CONSTANTS from '../../modules/constants';
 import { GetAllProducts } from '../../providers/products.provider';
 import ProductCards from '../product-cards/product-cards.component';
 
-const Collection = (props) => {
+const Collection = () => {
   const collection_iteration = 4;
   const collection_limit = collection_iteration * 2;
 
@@ -84,9 +84,7 @@ const Collection = (props) => {
             productsSlice.map((value, key) => {
               return (
                 <Col md={3} sm={4} xs={12} className="mb-4" key={key}>
-                  <Link to={'/product-info'} className="text-dark" onClick={props.handleNavItem}>
-                    <ProductCards productData={value} />
-                  </Link>
+                  <ProductCards productData={value} urlHistory="/home" />
                 </Col>
               );
             })

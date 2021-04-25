@@ -100,6 +100,19 @@ li.tab-active {
   border-bottom: 3px solid #343a40;
 }
 
+.product-info-nav-buttons {
+  float: left;
+
+  p {
+    cursor: pointer;
+    font-size: 16pt;
+    
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+
 // React Simple Image Viewer Styling
 #ReactSimpleImageViewer {
   z-index: 99999;

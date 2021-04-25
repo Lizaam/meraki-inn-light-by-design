@@ -13,7 +13,7 @@ export function PriceRangeInput(props) {
     var max_price = DetermineMaxPrice(storage_data.products);
 
     setMaxPrice(max_price);
-  });
+  }, []);
 
   const DetermineMaxPrice = (data) => {
     var prices = data.map(obj => parseInt(obj.price.substring(1)));
