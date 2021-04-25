@@ -64,7 +64,7 @@ const HomeComponent = (props) => {
         </Row>
       </Container>
 
-      <Container className="py-5" id="c-home-catalogue">
+      <Container className="py-5 c-w" id="c-home-catalogue">
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
             <h2 className="text-uppercase mb-5">Our Collection</h2>

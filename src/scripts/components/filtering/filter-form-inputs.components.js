@@ -5,7 +5,13 @@ import { PriceRangeInput } from './price-slider.component';
 
 export function FilterFormInputs(props) {
   const HandleFurtherProductFiltering = (event) => {
-    props.onProductDataChange(event.target.dataset.type);
+    var type_data = event.target.dataset.type;
+
+    if (type_data) {
+      props.onProductDataChange(type_data)
+    } else {
+      props.onProductDataChange(event.target.value);
+    } 
   }
 
   return (
@@ -21,7 +27,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="all"
             name="formRadios"
-            id="formProductTypeRadios1"
+            id="all"
             data-type="all"
             onClick={HandleFurtherProductFiltering}
           />
@@ -29,7 +35,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="chandelier"
             name="formRadios"
-            id="formProductTypeRadios2"
+            id="chandelier"
             data-type="chandelier"
             onClick={HandleFurtherProductFiltering}
           />
@@ -37,7 +43,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="lamp"
             name="formRadios"
-            id="formProductTypeRadios3"
+            id="lamp"
             data-type="lamp"
             onClick={HandleFurtherProductFiltering}
           />
@@ -45,13 +51,16 @@ export function FilterFormInputs(props) {
             type="radio"
             label="candle"
             name="formRadios"
-            id="formProductTypeRadios4"
+            id="candle"
             data-type="candle"
             onClick={HandleFurtherProductFiltering}
           />
         </Col>
       </Form.Group>
-      <PriceRangeInput />
+      <PriceRangeInput 
+        filteredDataUpdate={props.filteredDataUpdate} 
+        onRangeSliderProductChange={HandleFurtherProductFiltering}
+      />
       <Form.Group as={Row}>
         <Form.Label as="legend" column sm={12}>
           <h6 className="font-weight-bold">
@@ -63,7 +72,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="beaded"
             name="formRadios"
-            id="formCategoryRadios1"
+            id="beaded"
             data-type="beaded"
             onChange={HandleFurtherProductFiltering}
           />
@@ -71,7 +80,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="crystals"
             name="formRadios"
-            id="formCategoryRadios2"
+            id="crystals"
             data-type="crystals"
             onChange={HandleFurtherProductFiltering}
           />
@@ -89,7 +98,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="available for bulk"
             name="formRadios"
-            id="formUnitRadios1"
+            id="afbulk"
             data-type="available for bulk"
             onChange={HandleFurtherProductFiltering}
           />
@@ -97,7 +106,7 @@ export function FilterFormInputs(props) {
             type="radio"
             label="not available for bulk"
             name="formRadios"
-            id="formUnitRadios2"
+            id="nafbulk"
             data-type="not available for bulk"
             onChange={HandleFurtherProductFiltering}
           />
@@ -113,9 +122,17 @@ export function FilterFormInputs(props) {
         <Col sm={12}>
           <Form.Check
             type="radio"
+            label="1x E14 fitting"
+            name="formRadios"
+            id="1x"
+            data-type="1x E14 fitting"
+            onChange={HandleFurtherProductFiltering}
+          />
+          <Form.Check
+            type="radio"
             label="5x E14 fitting"
             name="formRadios"
-            id="formFixtureRadios1"
+            id="5x"
             data-type="5x E14 fitting"
             onChange={HandleFurtherProductFiltering}
           />
@@ -123,14 +140,15 @@ export function FilterFormInputs(props) {
             type="radio"
             label="6x E14 fitting"
             name="formRadios"
-            id="formFixtureRadios2"
+            id="6x"
             data-type="6x E14 fitting"
+            onChange={HandleFurtherProductFiltering}
           />
           <Form.Check
             type="radio"
             label="7x E14 fitting"
             name="formRadios"
-            id="formFixtureRadios3"
+            id="7x"
             data-type="7x E14 fitting"
             onChange={HandleFurtherProductFiltering}
           />
@@ -138,16 +156,24 @@ export function FilterFormInputs(props) {
             type="radio"
             label="8x E14 fitting"
             name="formRadios"
-            id="formFixtureRadios4"
+            id="8x"
             data-type="8x E14 fitting"
             onChange={HandleFurtherProductFiltering}
           />
           <Form.Check
             type="radio"
-            label="more than 8x"
+            label="More than 8x"
             name="formRadios"
-            id="formFixtureRadios5"
+            id="morethan8x"
             data-type="more than 8x"
+            onChange={HandleFurtherProductFiltering}
+          />
+          <Form.Check
+            type="radio"
+            label="Other fittings"
+            name="formRadios"
+            id="other-fittings"
+            data-type="other fittings"
             onChange={HandleFurtherProductFiltering}
           />
         </Col>

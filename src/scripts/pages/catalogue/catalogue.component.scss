@@ -1,6 +1,6 @@
 #light-left-s-1 {
   .light-left-search-links {
-    font-size: 10pt;
+    font-size: 14pt;
     margin-bottom: 20px;
     text-decoration: underline;
   }
@@ -57,4 +57,9 @@
 
 .custom-range::-ms-thumb {
   background: gray;
+}
+
+.filtered-by-text {
+  font-size: 75%;
+  text-transform: capitalize;
 }

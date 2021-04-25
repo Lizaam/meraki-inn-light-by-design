@@ -22,10 +22,12 @@ export default class CONSTANTS {
     retro: 'retro',
     availableForBulk: 'available for bulk',
     notAvailableForBulk: 'not available for bulk',
+    fitting1x: '1x e14 fitting',
     fitting5x: '5x e14 fitting',
     fitting6x: '6x e14 fitting',
     fitting7x: '7x e14 fitting',
     fitting8x: '8x e14 fitting',
     moreThan8x: 'more than 8x',
+    otherFittings: 'other fittings'
   }
 }

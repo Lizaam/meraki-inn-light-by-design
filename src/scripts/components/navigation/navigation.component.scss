@@ -70,7 +70,7 @@
 
 .main-nav-fixed {
   position: fixed;
-  z-index: 500;
+  z-index: 9999;
   background-color: $base-color;
   top: 0px;
   max-width: 100% !important;
