@@ -49,8 +49,7 @@ const Collection = () => {
         to={{
           pathname: '/catalogue',
           data: {
-            type: 'product',
-            products: 'all'
+            type: 'product'
           }
         }}>
         <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2">
@@ -84,7 +83,11 @@ const Collection = () => {
             productsSlice.map((value, key) => {
               return (
                 <Col md={3} sm={4} xs={12} className="mb-4" key={key}>
-                  <ProductCards productData={value} urlHistory="/home" />
+                  <ProductCards 
+                    productData={value} 
+                    urlHistory="/home" 
+                    filterString={value.info.style}
+                  />
                 </Col>
               );
             })

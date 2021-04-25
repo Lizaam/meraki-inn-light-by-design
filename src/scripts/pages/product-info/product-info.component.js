@@ -59,7 +59,14 @@ const ProductInfoComponent = (props) => {
           <Col md={8} sm={6} xs={12} className="h-fit-content">
             <div className="image-wrapper mb-5">
               <div className="product-info-nav-buttons">
-                <Link to={props.location.data.urlHistory} className="text-dark">
+                <Link to={{
+                  pathname: props.location.data.urlHistory,
+                  data: {
+                    products: props.location.data.filterString
+                  }
+                }} 
+                className="text-dark"
+                >
                   <p>
                     <i className="fa fa-arrow-left"></i> Go Back
                   </p>

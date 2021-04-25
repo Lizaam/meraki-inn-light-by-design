@@ -16,7 +16,9 @@ const ProductCards = (props) => {
     <Link to={{
         pathname: '/product-info',
         data: {
-          urlHistory: props.urlHistory
+          urlHistory: props.urlHistory,
+          productType: props.productData,
+          filterString: props.filterString
         }
       }}
       className="text-dark">
