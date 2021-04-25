@@ -104,7 +104,7 @@ const Collection = (props) => {
                         <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
                         <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
                         <CardIcons product={value} showAdditionalText={false} />
-                        <Button type="button" variant="warning" className="text-light font-weight-bold mt-4" onClick={() => productInfoState(value)}>
+                        <Button type="button" variant="warning" className="text-light font-weight-bold mt-4 d-block" onClick={() => productInfoState(value)}>
                           View Info
                         </Button>
                       </Card.Body>

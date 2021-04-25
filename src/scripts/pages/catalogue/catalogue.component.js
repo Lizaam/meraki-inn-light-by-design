@@ -13,9 +13,11 @@ const CatalogueComponent = (data) => {
   var view_more_count = 12;
   var max_products_view_reached = false;
   var search_string = (data.location.data) ? data.location.data.products : 'all';
+  var current_filter = null;
 
   const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
+  const [currentFilter, setCurrentFilter] = useState('');
   const [, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
@@ -32,36 +34,46 @@ const CatalogueComponent = (data) => {
 
   const FilterProducts = (filter, data) => {
     var filter_products = data.filter(obj => {
-      switch (filter.toLowerCase()) {
-        case CONSTANTS.searchTerms.all:
-          return obj;
-        case CONSTANTS.searchTerms.chandelier:
-        case CONSTANTS.searchTerms.lamp:
-        case CONSTANTS.searchTerms.candle:
-          return obj.info.type.includes(filter);
-        case CONSTANTS.searchTerms.beaded:
-        case CONSTANTS.searchTerms.crystals:
-        case CONSTANTS.searchTerms.retro:
-          return obj.info.style.includes(filter);
-        case CONSTANTS.searchTerms.availableForBulk:
-        case CONSTANTS.searchTerms.notAvailableForBulk:
-          return filter === obj.bulk.toLowerCase();
-        case CONSTANTS.searchTerms.fitting5x:
-        case CONSTANTS.searchTerms.fitting6x:
-        case CONSTANTS.searchTerms.fitting7x:
-        case CONSTANTS.searchTerms.fitting8x:
-        case CONSTANTS.searchTerms.moreThan8x:
-          return filter === obj.globeType;
-        default:
-          return obj;
+      var filter_type_check_via_price = parseInt(filter);
+
+      if (!isNaN(filter_type_check_via_price)) {
+        var obj_price = parseInt(obj.price.substring(1));
+        var filter_price = filter_type_check_via_price;
+
+        return obj_price === filter_price;
+      } else {
+        switch (filter.toLowerCase()) {
+          case CONSTANTS.searchTerms.all:
+            return obj;
+          case CONSTANTS.searchTerms.chandelier:
+          case CONSTANTS.searchTerms.lamp:
+          case CONSTANTS.searchTerms.candle:
+            return obj.info.type.includes(filter);
+          case CONSTANTS.searchTerms.beaded:
+          case CONSTANTS.searchTerms.crystals:
+          case CONSTANTS.searchTerms.retro:
+            return obj.info.style.includes(filter);
+          case CONSTANTS.searchTerms.availableForBulk:
+          case CONSTANTS.searchTerms.notAvailableForBulk:
+            return filter === obj.bulk.toLowerCase();
+          case CONSTANTS.searchTerms.fitting1x:
+          case CONSTANTS.searchTerms.fitting5x:
+          case CONSTANTS.searchTerms.fitting6x:
+          case CONSTANTS.searchTerms.fitting7x:
+          case CONSTANTS.searchTerms.fitting8x:
+            return filter === obj.globeType;
+          case CONSTANTS.searchTerms.moreThan8x:
+            var fixture_figure = parseInt(obj.globeType.split(" ")[0].slice(0, -1));
+            return fixture_figure > 8;
+          case CONSTANTS.searchTerms.otherFittings:
+            return obj.globeType.includes('+');
+          default:
+            return obj;
+        }
       }
     })
 
     return filter_products;
-  }
-
-  const CapitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   const FormatProductTitle = (title) => {
@@ -90,8 +102,9 @@ const CatalogueComponent = (data) => {
     }
   }
 
-  const HandleProductTypeFiltering = (value) => {
+  const HandleProductFiltering = (value) => {
     SetProductsFromStorage(value);
+    setCurrentFilter(value)
   }
 
   if (productData.loading) {
@@ -110,14 +123,16 @@ const CatalogueComponent = (data) => {
           <Row>
             <Col md={3}>
               <div id="light-left-s-1">
-                <div className="light-left-search-links">
-                  Home / Catalogue {` / ` + CapitalizeFirstLetter(search_string)}
-                </div>
-                <h5>Shop By</h5>
+                <h5>Filtering By: 
+                  <span className="d-block my-2 filtered-by-text">{currentFilter}</span>
+                </h5>
               </div>
               <hr />
               <div id="light-left-s-2">
-                <FilterFormInputs onProductDataChange={HandleProductTypeFiltering} />
+                <FilterFormInputs 
+                  onProductDataChange={HandleProductFiltering} 
+                  filteredDataUpdate={productData.data}
+                />
               </div>
             </Col>
             <Col md={9}>
@@ -126,7 +141,7 @@ const CatalogueComponent = (data) => {
                   slicedProductsList.length > 0 ?
                   slicedProductsList.map((value, key) => {
                     return (
-                      <Col md={3} sm={6} xs={12} className="mb-4" key={key}>
+                      <Col md={3} sm={4} xs={12} className="mb-4" key={key}>
                         <Link
                           to={'/product-info'}
                           className="text-dark">
@@ -139,7 +154,7 @@ const CatalogueComponent = (data) => {
                               <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
                               <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
                               <CardIcons product={value} showAdditionalText={false} />
-                              <Button type="button" variant="warning" className="text-light font-weight-bold mt-4" onClick={() => productInfoState(value)}>
+                              <Button type="button" variant="warning" className="text-light font-weight-bold mt-4 d-block" onClick={() => productInfoState(value)}>
                                 View Info
                               </Button>
                             </Card.Body>
