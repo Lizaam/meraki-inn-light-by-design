@@ -8,17 +8,16 @@ import CardIcons from '../../components/card-icons/card-icons.component';
 import { ProductsInfoContext } from '../../../App';
 import CONSTANTS from '../../modules/constants';
 import { FilterFormInputs } from '../../components/filtering/filter-form-inputs.components';
+import ProductCards from '../../components/product-cards/product-cards.component';
 
 const CatalogueComponent = (data) => {
   var view_more_count = 12;
   var max_products_view_reached = false;
   var search_string = (data.location.data) ? data.location.data.products : 'all';
-  var current_filter = null;
 
   const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
   const [currentFilter, setCurrentFilter] = useState('');
-  const [, productInfoState] = useContext(ProductsInfoContext);
 
   useEffect(() => {
     SetProductsFromStorage(search_string);
@@ -142,23 +141,8 @@ const CatalogueComponent = (data) => {
                   slicedProductsList.map((value, key) => {
                     return (
                       <Col md={3} sm={4} xs={12} className="mb-4" key={key}>
-                        <Link
-                          to={'/product-info'}
-                          className="text-dark">
-                          <Card>
-                            <img src={value.assets.imgSrc} className="card-img-top card-img-home" alt="..." />
-
-                            <Card.Body className="small-text">
-                              <h6>{FormatProductTitle(value.name)}</h6>
-                              <Card.Text className="mb-0">Style: {value.info.style}</Card.Text>
-                              <Card.Text className="mb-0">Type: {value.info.type}</Card.Text>
-                              <Card.Text className="product-price-home">Price: {value.price}</Card.Text>
-                              <CardIcons product={value} showAdditionalText={false} />
-                              <Button type="button" variant="warning" className="text-light font-weight-bold mt-4 d-block" onClick={() => productInfoState(value)}>
-                                View Info
-                              </Button>
-                            </Card.Body>
-                          </Card>
+                        <Link to={'/product-info'} className="text-dark">
+                          <ProductCards productData={value} />
                         </Link>
                       </Col>
                     );
