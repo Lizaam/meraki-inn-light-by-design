@@ -15,7 +15,6 @@ import AboutComponent from '../../pages/about/about.component';
 import FaqsComponent from '../../pages/faqs/faqs.component';
 import Footer from '../footer/footer.component';
 import PrivacyComponent from '../../pages/privacy/privacy.component';
-import ProductsComponent from '../../pages/products-info/products-info.component';
 import ReturnsComponent from '../../pages/returns/returns.component';
 import TermsComponent from '../../pages/terms/terms.component';
 import ProductInfoComponent from '../../pages/product-info/product-info.component';
@@ -329,7 +328,6 @@ const NavigationComponent = () => {
           <Route path="/about" component={AboutComponent} />
           <Route path="/faqs" component={FaqsComponent} />
           <Route path="/privacy" component={PrivacyComponent} />
-          <Route path="/products-information" component={ProductsComponent} />
           <Route path="/return-policy" component={ReturnsComponent} />
           <Route path="/terms-and-conditions" component={TermsComponent} />
           <Redirect to="/home" />
