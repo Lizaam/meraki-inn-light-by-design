@@ -6,11 +6,12 @@ import { PriceRangeInput } from './price-slider.component';
 export function FilterFormInputs(props) {
   const HandleFurtherProductFiltering = (event) => {
     var type_data = event.target.dataset.type;
+    var type_element = event.target.type;
 
     if (type_data) {
-      props.onProductDataChange(type_data)
+      props.onProductDataChange(type_data, type_element)
     } else {
-      props.onProductDataChange(event.target.value);
+      props.onProductDataChange(event.target.value, type_element);
     } 
   }
 

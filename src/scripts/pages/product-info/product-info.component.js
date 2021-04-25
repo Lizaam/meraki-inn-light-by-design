@@ -8,10 +8,11 @@ import './product-info.component.scss';
 import { ProductDictionary } from './additional-info';
 import CardIcons from '../../components/card-icons/card-icons.component';
 import ImageViewer from 'react-simple-image-viewer';
+import { Link } from 'react-router-dom';
 
 const tabs = ['Product Function', 'Additional Information'];
 
-const ProductInfoComponent = () => {
+const ProductInfoComponent = (props) => {
   const [productInfo] = useContext(ProductsInfoContext);
   const [description, expandDescription] = useState(false);
   const [tab, tabState] = useState(tabs[0]);
@@ -57,6 +58,21 @@ const ProductInfoComponent = () => {
         <Row>
           <Col md={8} sm={6} xs={12} className="h-fit-content">
             <div className="image-wrapper mb-5">
+              <div className="product-info-nav-buttons">
+                <Link to={{
+                  pathname: props.location.data.urlHistory,
+                  data: {
+                    products: props.location.data.filterString
+                  }
+                }} 
+                className="text-dark"
+                >
+                  <p>
+                    <i className="fa fa-arrow-left"></i> Go Back
+                  </p>
+                </Link>
+              </div>
+
               <img
                 src={productInfo.assets.imgSrc}
                 className="rounded d-block mx-auto" alt="..."
@@ -94,7 +110,7 @@ const ProductInfoComponent = () => {
               <h3>{productInfo.colour} - {productInfo.globeType}</h3>
               <h3>{productInfo.price}</h3>
               <p className="my-3">{productInfo.bulk}</p>
-              <Button variant={"dark"} id="btn-request-product" className="w-100 my-3">Send Product Request</Button>
+              <Button variant={"warning"} id="btn-request-product" className="w-100 my-3 text-light">Send Product Request</Button>
             </div>
 
             <div className="product-extra-details mb-3">

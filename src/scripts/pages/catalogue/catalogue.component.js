@@ -1,19 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './catalogue.component.scss';
 import PageIndication from '../../components/page-indication/page-indication.component';
 import ProgressComponent from '../../components/progress/progress.component';
-import CardIcons from '../../components/card-icons/card-icons.component';
-import { ProductsInfoContext } from '../../../App';
 import CONSTANTS from '../../modules/constants';
 import { FilterFormInputs } from '../../components/filtering/filter-form-inputs.components';
 import ProductCards from '../../components/product-cards/product-cards.component';
 
-const CatalogueComponent = (data) => {
+const CatalogueComponent = (props) => {
   var view_more_count = 12;
   var max_products_view_reached = false;
-  var search_string = (data.location.data) ? data.location.data.products : 'all';
+  var search_string = (props.location.data) ? props.location.data.products : 'all';
 
   const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(view_more_count);
@@ -21,23 +19,21 @@ const CatalogueComponent = (data) => {
 
   useEffect(() => {
     SetProductsFromStorage(search_string);
-  }, [data, search_string]);
+  }, [props, search_string]);
 
-  const SetProductsFromStorage = (filterString) => {
+  const SetProductsFromStorage = (filterString, filterElement) => {
     var get_products_from_storage = localStorage.getItem(CONSTANTS.storageKeys.all);
     var storage_data = JSON.parse(get_products_from_storage);
-    var filtered_data = FilterProducts(filterString, storage_data.products);
+    var filtered_data = FilterProducts(filterString, storage_data.products, filterElement);
 
     setProductData({ loading: false, data: filtered_data });
   }
 
-  const FilterProducts = (filter, data) => {
+  const FilterProducts = (filter, data, elementType) => {
     var filter_products = data.filter(obj => {
-      var filter_type_check_via_price = parseInt(filter);
-
-      if (!isNaN(filter_type_check_via_price)) {
+      if (elementType === 'range') {
         var obj_price = parseInt(obj.price.substring(1));
-        var filter_price = filter_type_check_via_price;
+        var filter_price = parseInt(filter);
 
         return obj_price === filter_price;
       } else {
@@ -75,10 +71,6 @@ const CatalogueComponent = (data) => {
     return filter_products;
   }
 
-  const FormatProductTitle = (title) => {
-    return title.split('-').join(' ');
-  }
-
   const LoadMoreProducts = () => {
     setProductSize(productSize + view_more_count);
   }
@@ -101,8 +93,8 @@ const CatalogueComponent = (data) => {
     }
   }
 
-  const HandleProductFiltering = (value) => {
-    SetProductsFromStorage(value);
+  const HandleProductFiltering = (value, element) => {
+    SetProductsFromStorage(value, element);
     setCurrentFilter(value)
   }
 
@@ -141,9 +133,11 @@ const CatalogueComponent = (data) => {
                   slicedProductsList.map((value, key) => {
                     return (
                       <Col md={3} sm={4} xs={12} className="mb-4" key={key}>
-                        <Link to={'/product-info'} className="text-dark">
-                          <ProductCards productData={value} />
-                        </Link>
+                        <ProductCards 
+                          productData={value} 
+                          urlHistory="/catalogue" 
+                          filterString={currentFilter !== '' ? currentFilter : 'all'}
+                        />
                       </Col>
                     );
                   }) :
