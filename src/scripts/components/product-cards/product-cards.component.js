@@ -18,7 +18,8 @@ const ProductCards = (props) => {
         data: {
           urlHistory: props.urlHistory,
           productType: props.productData,
-          filterString: props.filterString
+          filterString: props.filterString,
+          relatedProducts: props.relatedProducts
         }
       }}
       className="text-dark">
