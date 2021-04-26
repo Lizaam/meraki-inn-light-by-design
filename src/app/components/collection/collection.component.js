@@ -49,7 +49,7 @@ const Collection = () => {
         to={{
           pathname: '/catalogue',
           data: {
-            type: 'product'
+            products: 'all'
           }
         }}>
         <Button type="button" variant="dark" className="text-light font-weight-bold mt-4 mb-2">

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import NavigationComponent from './scripts/components/navigation/navigation.component';
+import NavigationComponent from './app/components/navigation/navigation.component';
 
 export const ProductsInfoContext = createContext();
 export const ActiveNavItemContext = createContext();
