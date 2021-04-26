@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import './catalogue.component.scss';
 import PageIndication from '../../components/page-indication/page-indication.component';
 import ProgressComponent from '../../components/progress/progress.component';
@@ -137,6 +136,7 @@ const CatalogueComponent = (props) => {
                           productData={value} 
                           urlHistory="/catalogue" 
                           filterString={currentFilter !== '' ? currentFilter : 'all'}
+                          relatedProducts={productData}
                         />
                       </Col>
                     );

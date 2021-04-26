@@ -12,7 +12,7 @@ const Collection = () => {
   const collection_iteration = 4;
   const collection_limit = collection_iteration * 2;
 
-  const [product, setProduct] = useState({ loading: true, data: null });
+  const [productData, setProductData] = useState({ loading: true, data: null });
   const [productSize, setProductSize] = useState(collection_iteration);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Collection = () => {
 
     if (!get_products_from_storage) {
       GetAllProducts().then(data => {
-        setProduct({
+        setProductData({
           loading: false,
           data: data.products
         });
@@ -30,7 +30,7 @@ const Collection = () => {
     } else {
       const storage_data = JSON.parse(get_products_from_storage);
 
-      setProduct({
+      setProductData({
         loading: false,
         data: storage_data.products
       });
@@ -67,14 +67,14 @@ const Collection = () => {
     );
   }
 
-  if (product.loading) {
+  if (productData.loading) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <ProgressComponent />
       </div>
     );
   } else {
-    var productsSlice = product.data.slice(0, productSize);
+    var productsSlice = productData.data.slice(0, productSize);
 
     return (
       <React.Fragment>
@@ -87,6 +87,7 @@ const Collection = () => {
                     productData={value} 
                     urlHistory="/home" 
                     filterString={value.info.style}
+                    relatedProducts={productData}
                   />
                 </Col>
               );
