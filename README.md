@@ -12,24 +12,7 @@ To run development environment, run following command
 
 To build for production, run following command
 
-`npm build` 
-
-# Tools Included in this project
-
-<ul>
-  <li>React Dom Routing</li>
-  <li>Babel</li>
-  <li>CSS Loader, HTML Loader</li>
-  <li>HTML Webpack Plugin</li>
-  <li>React Dom Routing</li>
-  <li>Node Sass, Sass Loader</li>
-  <li>Webpack, Webpack CLI, Webpack Dev Server</li>
-  <li>ESLint</li>
-  <li>Google Maps React</li>
-  <li>jQuery</li>
-  <li>Redux, React Redux</li>
-  <li>React Id Swiper, Swiper</li>
-</ul>
+`npm run build` 
 
 # Credits
 
