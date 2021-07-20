@@ -12,6 +12,13 @@ export default class CONSTANTS {
     }
   }
 
+  static forms = {
+    contactFormHost: 'http://localhost:7250/',
+    requests: {
+      contactForm: 'contact-form/'
+    }
+  }
+
   static searchTerms = {
     all: 'all',
     chandelier: 'chandelier',

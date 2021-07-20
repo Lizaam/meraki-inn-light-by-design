@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
 import './contact.component.scss';
 import PageIndication from '../../components/page-indication/page-indication.component';
+import { SendContactForm } from '../../providers/emails.provider';
 
 const ContactComponent = () => {
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
+  const [message, setMessage] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  const HandleFormSubmit = () => {
+    const formData = {
+      name: name,
+      surname: surname,
+      email: email,
+      number: number,
+      message: message
+    }
+
+    SendContactForm(formData).then((res) => {
+      console.log(res);
+    });
+  }
+
   return (
     <React.Fragment>
       <PageIndication page="Contact Us" />
@@ -30,35 +52,61 @@ const ContactComponent = () => {
               we'll get back to you!
             </p>
 
-            <Form>
-              <Form.Row>
-                <Col md={6} xs={12}>
-                  <Form.Control placeholder="Name & Surname" />
-                </Col>
-                <Col md={6} xs={12}>
-                  <Form.Control placeholder="Email Address" />
-                </Col>
-                <Col md={6} xs={12}>
-                  <Form.Control placeholder="Contact Number" />
-                </Col>
-                <Col md={6} xs={12}>
-                  <Form.Control placeholder="Subject" />
-                </Col>
-                <Col md={12} xs={12}>
-                  <Form.Control
-                    as="textarea"
-                    rows="5"
-                    placeholder="Message"
-                    className="mb-2"
-                  />
-                </Col>
-                <Col md={12} xs={12}>
-                  <Button variant={"warning"} className="text-light">
-                    Submit
-                  </Button>
-                </Col>
-              </Form.Row>
-            </Form>
+            {
+              !formValid 
+              ?
+              <Form>
+                <Form.Row>
+                  <Col md={6} xs={12}>
+                    <Form.Control
+                      type="text"
+                      id="name"
+                      onChange={event => setName(event.target.value)}
+                      placeholder="Name" />
+                  </Col>
+                  <Col md={6} xs={12}>
+                    <Form.Control
+                      type="text"
+                      id="surname"
+                      onChange={event => setSurname(event.target.value)}
+                      placeholder="Surname" />
+                  </Col>
+                  <Col md={6} xs={12}>
+                    <Form.Control
+                      type="email"
+                      id="email"
+                      onChange={event => setEmail(event.target.value)}
+                      placeholder="Email Address" />
+                  </Col>
+                  <Col md={6} xs={12}>
+                    <Form.Control
+                      type="number"
+                      id="contact-number"
+                      onChange={event => setNumber(event.target.value)}
+                      placeholder="Contact Number" />
+                  </Col>
+                  <Col md={12} xs={12}>
+                    <Form.Control
+                      as="textarea"
+                      rows="5"
+                      placeholder="Message"
+                      className="mb-2"
+                      id="message"
+                      onChange={event => setMessage(event.target.value)}
+                    />
+                  </Col>
+                  <Col md={12} xs={12}>
+                    <Button type="submit" variant={"warning"} className="text-light" onClick={HandleFormSubmit}>
+                      Submit
+                    </Button>
+                  </Col>
+                </Form.Row>
+              </Form>
+              :
+              <React.Fragment>
+                <h5 className="text-uppercase">Form details sent successfully.</h5>
+              </React.Fragment>
+            }
           </Col>
           <Col md={6} xs={12}>
             <p className="font-weight-bold text-uppercase">All About Designs</p>
